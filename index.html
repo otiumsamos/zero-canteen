@@ -1,588 +1,436 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ZERO — Beach Canteen · Mykalis 0 · Samos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --linen:#fff4e4;
-  --ivory:#fffaf1;
-  --sand:#ead4af;
-  --sun:#f5cfa6;
-  --peach:#f4b98f;
-  --terracotta:#af6849;
-  --rope:#9a6937;
-  --wood:#4f3423;
-  --ink:#2b231d;
-  --muted:#7c6d5e;
-  --sea:#8db9bf;
-  --seaDeep:#4f7d86;
-  --foam:#dcedea;
-  --gold:#c38b3f;
-  --shadow:0 26px 80px rgba(80,52,31,.18);
-  --radius:34px;
+  --linen:#fff4e4;--ivory:#fffaf1;--sand:#ead4af;--sun:#f5cfa6;
+  --peach:#f4b98f;--terracotta:#af6849;--rope:#9a6937;--wood:#4f3423;
+  --ink:#2b231d;--muted:#7c6d5e;--sea:#8db9bf;--seaDeep:#4f7d86;
+  --foam:#dcedea;--gold:#c38b3f;
+  --shadow:0 26px 80px rgba(80,52,31,.18);--radius:24px;
+  --announce-h:34px;--nav-h:68px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{
-  font-family:Manrope,system-ui,sans-serif;
-  background:var(--linen);
-  color:var(--ink);
-  overflow-x:hidden;
-}
-body:before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:999;
-  opacity:.16;
-  mix-blend-mode:multiply;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
-}
+body{font-family:Manrope,system-ui,sans-serif;background:var(--linen);color:var(--ink);overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.14;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E");}
 img{max-width:100%;display:block}
 a{text-decoration:none;color:inherit}
-.serif{font-family:'Cormorant Garamond',serif}
-.italic{font-style:italic}
+
+/* ── ANNOUNCE BAR ── */
 .announce{
-  position:fixed;top:0;left:0;right:0;z-index:60;
-  background:var(--terracotta);
-  color:var(--ivory);
-  font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
-  text-align:center;padding:9px 44px;
-  display:flex;align-items:center;justify-content:center;gap:18px;
+  position:fixed;top:0;left:0;right:0;z-index:60;height:var(--announce-h);
+  background:var(--terracotta);color:var(--ivory);
+  font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  padding:0 16px;text-align:center;
 }
-.announce-dot{width:5px;height:5px;background:rgba(255,250,241,.5);border-radius:50%;flex-shrink:0}
+.announce-dot{width:4px;height:4px;background:rgba(255,250,241,.55);border-radius:50%;flex-shrink:0}
+
+/* ── NAV ── */
 .nav{
-  position:fixed;top:34px;left:0;right:0;z-index:50;height:78px;
+  position:fixed;top:var(--announce-h);left:0;right:0;z-index:50;
+  height:var(--nav-h);
   display:flex;align-items:center;justify-content:space-between;
-  padding:0 46px;
-  background:linear-gradient(180deg,rgba(255,244,228,.88),rgba(255,244,228,.38));
+  padding:0 24px;
+  background:rgba(255,244,228,.93);
   backdrop-filter:blur(16px);
   border-bottom:1px solid rgba(79,52,35,.10);
 }
-.brand{
-  font-size:14px;font-weight:700;letter-spacing:.42em;color:var(--wood);
-}
-.nav ul{display:flex;gap:34px;list-style:none;align-items:center}
-.nav a{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(43,35,29,.72);transition:.25s}
-.nav a:hover{color:var(--terracotta)}
-.nav-cta{border:1px solid rgba(79,52,35,.25);border-radius:999px;padding:12px 17px;background:rgba(255,250,241,.42)}
-.lang-toggle{
-  display:flex;align-items:center;
-  border:1px solid rgba(79,52,35,.25);border-radius:999px;
-  overflow:hidden;background:rgba(255,250,241,.42);
-  flex-shrink:0;
-}
-.lang-btn{
-  font-size:10px;font-weight:700;letter-spacing:.18em;
-  padding:8px 13px;cursor:pointer;border:none;background:transparent;
-  color:rgba(43,35,29,.52);transition:.2s;font-family:Manrope,system-ui,sans-serif;
-  text-transform:uppercase;
-}
+.brand{font-size:13px;font-weight:700;letter-spacing:.42em;color:var(--wood)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(43,35,29,.72);transition:.25s}
+.nav-links a:hover{color:var(--terracotta)}
+.nav-cta{border:1px solid rgba(79,52,35,.25);border-radius:999px;padding:10px 16px;background:rgba(255,250,241,.42)}
+.nav-right{display:flex;align-items:center;gap:12px}
+
+/* Lang toggle */
+.lang-toggle{display:flex;align-items:center;border:1px solid rgba(79,52,35,.25);border-radius:999px;overflow:hidden;background:rgba(255,250,241,.42);flex-shrink:0}
+.lang-btn{font-size:9px;font-weight:700;letter-spacing:.16em;padding:7px 11px;cursor:pointer;border:none;background:transparent;color:rgba(43,35,29,.52);transition:.2s;font-family:Manrope,system-ui,sans-serif;text-transform:uppercase}
 .lang-btn.active{background:var(--ink);color:var(--ivory)}
 .lang-btn:hover:not(.active){color:var(--terracotta)}
+
+/* Hamburger */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none}
+.hamburger span{width:22px;height:1.5px;background:var(--ink);display:block;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4px,5px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-5px)}
+
+/* Mobile nav drawer */
+.mobile-nav{
+  display:none;position:fixed;top:calc(var(--announce-h) + var(--nav-h));left:0;right:0;
+  background:rgba(255,244,228,.98);backdrop-filter:blur(16px);
+  z-index:49;padding:24px;
+  border-bottom:1px solid rgba(79,52,35,.12);
+  flex-direction:column;gap:0;
+}
+.mobile-nav.open{display:flex}
+.mobile-nav a{
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--ink);padding:16px 0;
+  border-bottom:1px solid rgba(79,52,35,.08);
+  transition:.2s;
+}
+.mobile-nav a:last-child{border-bottom:none}
+.mobile-nav a:hover{color:var(--terracotta)}
+.mobile-lang{display:flex;gap:8px;padding-top:20px}
+.mobile-lang button{
+  flex:1;padding:12px;border:1px solid rgba(79,52,35,.2);background:none;
+  font-family:Manrope,system-ui,sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.18em;cursor:pointer;border-radius:6px;color:var(--muted);
+}
+.mobile-lang button.active{background:var(--ink);color:var(--ivory);border-color:var(--ink)}
+
+/* ── HERO ── */
 .hero{
-  min-height:100svh;
-  position:relative;
-  display:grid;
-  place-items:center;
-  text-align:center;
-  padding:152px 22px 72px;
-  overflow:hidden;
-  background:var(--linen);
+  min-height:100svh;position:relative;display:grid;place-items:center;
+  text-align:center;padding:calc(var(--announce-h) + var(--nav-h) + 40px) 20px 60px;
+  overflow:hidden;background:var(--linen);
 }
 .hero-bg{
   position:absolute;inset:0;
-  background:
-    linear-gradient(180deg,rgba(43,35,29,.18),rgba(43,35,29,.02) 42%,rgba(255,244,228,.82) 88%),
+  background:linear-gradient(180deg,rgba(43,35,29,.2),rgba(43,35,29,.02) 42%,rgba(255,244,228,.85) 88%),
     url("zero_site_assets/samos-beach-hero.jpg") center/cover no-repeat;
   transform:scale(1.03);
 }
-.hero-bg:after{
+.hero-bg::after{
   content:"";position:absolute;inset:0;
-  background:
-    radial-gradient(circle at 50% 22%,rgba(255,245,224,.82),transparent 38%),
+  background:radial-gradient(circle at 50% 22%,rgba(255,245,224,.82),transparent 38%),
     linear-gradient(135deg,rgba(245,207,166,.24),rgba(141,185,191,.25));
 }
-.hero-inner{position:relative;z-index:2;max-width:980px;margin:auto}
-.eyebrow{
-  font-size:10px;letter-spacing:.42em;text-transform:uppercase;font-weight:700;
-  color:var(--terracotta);margin-bottom:18px;
-}
-.logo{
-  width:min(260px,58vw);
-  margin:0 auto 24px;
-  filter:drop-shadow(0 22px 38px rgba(58,38,24,.32));
-}
+.hero-inner{position:relative;z-index:2;max-width:900px;margin:auto;width:100%}
+.eyebrow{font-size:9px;letter-spacing:.38em;text-transform:uppercase;font-weight:700;color:var(--terracotta);margin-bottom:16px}
+.logo{width:min(200px,52vw);margin:0 auto 20px;filter:drop-shadow(0 18px 32px rgba(58,38,24,.32))}
 h1{
-  font-family:'Cormorant Garamond',serif;
-  font-weight:400;
-  font-size:clamp(38px,6.2vw,96px);
-  letter-spacing:.04em;
-  line-height:1.08;
-  color:var(--wood);
-  text-shadow:0 16px 50px rgba(255,244,228,.45);
-  text-transform:uppercase;
+  font-family:'Cormorant Garamond',serif;font-weight:400;
+  font-size:clamp(30px,5.5vw,84px);
+  letter-spacing:.04em;line-height:1.1;
+  color:var(--wood);text-transform:uppercase;
+  text-shadow:0 12px 40px rgba(255,244,228,.45);
 }
 h1 em{color:var(--terracotta);font-style:normal}
 h1 .borderline{
-  display:block;
-  font-size:clamp(11px,1.4vw,18px);
-  letter-spacing:.38em;
-  font-family:Manrope,system-ui,sans-serif;
-  font-weight:700;
-  color:var(--terracotta);
-  text-transform:uppercase;
-  margin-top:18px;
-  opacity:.9;
+  display:block;margin-top:14px;
+  font-size:clamp(9px,1.2vw,15px);
+  letter-spacing:.32em;font-family:Manrope,system-ui,sans-serif;
+  font-weight:700;color:var(--terracotta);text-transform:uppercase;opacity:.9;
 }
 .hero-copy{
-  max-width:680px;
-  margin:28px auto 34px;
-  font-size:15px;
-  line-height:2;
-  color:#574437;
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(16px,1.6vw,20px);
-  font-style:italic;
+  max-width:640px;margin:22px auto 28px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(15px,1.6vw,19px);line-height:1.9;color:#574437;
 }
-.actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .btn{
-  border:1px solid rgba(79,52,35,.26);
-  padding:15px 24px;
-  border-radius:999px;
-  background:rgba(255,250,241,.56);
-  backdrop-filter:blur(12px);
-  text-transform:uppercase;
-  letter-spacing:.22em;
-  font-size:10px;
-  transition:.28s ease;
+  border:1px solid rgba(79,52,35,.26);padding:14px 22px;border-radius:999px;
+  background:rgba(255,250,241,.56);backdrop-filter:blur(12px);
+  text-transform:uppercase;letter-spacing:.2em;font-size:9px;
+  transition:.28s ease;white-space:nowrap;
 }
 .btn.primary{background:var(--ink);color:var(--ivory);border-color:var(--ink)}
-.btn:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(79,52,35,.18)}
-.coords{
-  position:absolute;left:44px;bottom:38px;z-index:3;
-  font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:16px;line-height:1.4;color:rgba(43,35,29,.62);text-align:left;
-}
-.scroll{
-  position:absolute;right:44px;bottom:38px;z-index:3;
-  writing-mode:vertical-rl;
-  text-transform:uppercase;
-  letter-spacing:.28em;
-  font-size:9px;
-  color:rgba(43,35,29,.55);
-}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(79,52,35,.18)}
+.coords{position:absolute;left:24px;bottom:28px;z-index:3;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;line-height:1.5;color:rgba(43,35,29,.55)}
+.scroll-hint{position:absolute;right:24px;bottom:28px;z-index:3;writing-mode:vertical-rl;text-transform:uppercase;letter-spacing:.28em;font-size:8px;color:rgba(43,35,29,.45)}
+
+/* ── SECTIONS BASE ── */
 section{position:relative}
-.wrap{max-width:1200px;margin:auto;padding:112px 44px}
-.label{
-  font-size:10px;
-  letter-spacing:.38em;
-  text-transform:uppercase;
-  color:var(--terracotta);
-  font-weight:700;
-  margin-bottom:18px;
-}
-.title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(42px,6vw,86px);
-  line-height:.96;
-  font-weight:400;
-  color:var(--wood);
-  margin-bottom:26px;
-}
-.lead{
-  max-width:710px;
-  font-size:16px;
-  line-height:1.95;
-  color:var(--muted);
-}
-.two{
-  display:grid;
-  grid-template-columns:1.05fr .95fr;
-  gap:80px;
-  align-items:center;
-}
-.photo-card{
-  border-radius:var(--radius);
-  overflow:hidden;
-  min-height:560px;
-  box-shadow:var(--shadow);
-  position:relative;
-  border:1px solid rgba(79,52,35,.13);
-  background:var(--sand);
-}
-.photo-card img{
-  width:100%;height:100%;min-height:560px;object-fit:cover;
-  filter:saturate(.94) contrast(.98);
-}
-.photo-card:after{
-  content:"";
-  position:absolute;inset:0;
-  background:linear-gradient(180deg,transparent 46%,rgba(43,35,29,.42));
-}
-.photo-caption{
-  position:absolute;left:34px;right:34px;bottom:32px;z-index:2;
-  color:var(--ivory);
-  font-family:'Cormorant Garamond',serif;
-  font-size:34px;
-  line-height:1.05;
-  font-style:italic;
-}
+.wrap{max-width:1200px;margin:auto;padding:80px 24px}
+.label{font-size:9px;letter-spacing:.36em;text-transform:uppercase;color:var(--terracotta);font-weight:700;margin-bottom:16px}
+.title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,76px);line-height:1;font-weight:400;color:var(--wood);margin-bottom:22px}
+.lead{max-width:680px;font-size:15px;line-height:1.9;color:var(--muted)}
+
+/* ── STORY / PLACE ── */
 .story{background:linear-gradient(180deg,var(--linen),#f6e4c8)}
-.story-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1px;
-  margin-top:70px;
-  background:rgba(79,52,35,.13);
-  border:1px solid rgba(79,52,35,.13);
-}
-.story-item{
-  background:rgba(255,244,228,.92);
-  padding:38px 32px;
-  min-height:235px;
-}
-.num{
-  font-family:'Cormorant Garamond',serif;
-  font-size:54px;
-  color:rgba(175,104,73,.38);
-  margin-bottom:12px;
-}
-.story-item h3{
-  text-transform:uppercase;
-  letter-spacing:.24em;
-  font-size:13px;
-  color:var(--wood);
-  margin-bottom:16px;
-}
-.story-item p{font-size:14px;line-height:1.85;color:var(--muted)}
+.two{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;margin-bottom:60px}
+.photo-card{border-radius:var(--radius);overflow:hidden;min-height:480px;box-shadow:var(--shadow);position:relative;border:1px solid rgba(79,52,35,.13);background:var(--sand)}
+.photo-card img{width:100%;height:100%;min-height:480px;object-fit:cover;filter:saturate(.94) contrast(.98)}
+.photo-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 46%,rgba(43,35,29,.42))}
+.photo-caption{position:absolute;left:24px;right:24px;bottom:24px;z-index:2;color:var(--ivory);font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3vw,30px);line-height:1.1;font-style:italic}
+.story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(79,52,35,.13);border:1px solid rgba(79,52,35,.13)}
+.story-item{background:rgba(255,244,228,.92);padding:32px 26px;min-height:200px}
+.num{font-family:'Cormorant Garamond',serif;font-size:48px;color:rgba(175,104,73,.35);margin-bottom:10px}
+.story-item h3{text-transform:uppercase;letter-spacing:.22em;font-size:11px;color:var(--wood);margin-bottom:12px}
+.story-item p{font-size:13px;line-height:1.85;color:var(--muted)}
+
+/* ── ATMOSPHERE ── */
 .atmosphere{background:#f7e7ce}
-.gallery{
-  display:grid;
-  grid-template-columns:1.2fr .85fr 1fr;
-  grid-template-rows:295px 235px;
-  gap:18px;
-  margin-top:62px;
-}
-.tile{
-  position:relative;
-  overflow:hidden;
-  border-radius:30px;
-  box-shadow:var(--shadow);
-}
+.gallery{display:grid;grid-template-columns:1.2fr .85fr 1fr;grid-template-rows:260px 210px;gap:14px;margin-top:48px}
+.tile{position:relative;overflow:hidden;border-radius:20px;box-shadow:var(--shadow)}
 .tile:nth-child(1){grid-row:span 2}
 .tile:nth-child(3){grid-row:span 2}
 .tile img{width:100%;height:100%;object-fit:cover}
-.tile:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(43,35,29,.42))}
-.tile span{
-  position:absolute;left:24px;bottom:22px;z-index:2;
-  color:var(--ivory);
-  font-family:'Cormorant Garamond',serif;
-  font-size:30px;
-  font-style:italic;
-}
-.menu{background:linear-gradient(180deg,#fff4e4,#fff9ee)}
-.menu-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  gap:50px;
-  margin-bottom:56px;
-}
-.menu-head .lead{max-width:460px}
-.feature-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
-}
-.feature-card{
-  border-radius:32px;
-  overflow:hidden;
-  background:rgba(255,250,241,.72);
-  border:1px solid rgba(79,52,35,.12);
-  box-shadow:0 18px 45px rgba(80,52,31,.08);
-  transition:.3s ease;
-}
-.feature-card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
-.feature-img{height:330px;position:relative;overflow:hidden}
-.feature-img img{width:100%;height:100%;object-fit:cover}
-.feature-img:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(43,35,29,.28))}
-.feature-body{padding:28px}
-.feature-row{display:flex;justify-content:space-between;gap:18px;align-items:start;margin-bottom:12px}
-.feature-name{
-  font-family:'Cormorant Garamond',serif;
-  font-size:32px;
-  line-height:1;
-  color:var(--wood);
-}
-.price{color:var(--seaDeep);font-weight:700}
-.desc{font-size:13px;line-height:1.75;color:var(--muted)}
-.drinks{background:linear-gradient(145deg,var(--foam),#f7dfc1 72%)}
-.drinks-layout{
-  display:grid;
-  grid-template-columns:.9fr 1.1fr;
-  gap:28px;
-  margin-top:52px;
-}
-.drinks-photo{
-  border-radius:34px;
-  overflow:hidden;
-  min-height:620px;
-  box-shadow:var(--shadow);
-  position:relative;
-}
-.drinks-photo img{width:100%;height:100%;min-height:620px;object-fit:cover}
-.drink-list{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px;
-}
-.drink{
-  padding:30px;
-  border-radius:30px;
-  background:rgba(255,250,241,.58);
-  border:1px solid rgba(79,52,35,.12);
-}
-.drink img{
-  border-radius:24px;
-  height:190px;
-  width:100%;
-  object-fit:cover;
-  margin-bottom:20px;
-}
-.drink h3{
-  font-family:'Cormorant Garamond',serif;
-  font-size:34px;
-  font-weight:400;
-  color:var(--wood);
-  margin-bottom:12px;
-}
-.drink p{font-size:13px;line-height:1.75;color:var(--muted)}
-.visit{background:var(--linen)}
-.map{
-  min-height:460px;
-  border-radius:38px;
-  background:
-    linear-gradient(180deg,rgba(43,35,29,.04),rgba(43,35,29,.20)),
-    url("zero_site_assets/samos-beach-loungers.jpg") center/cover no-repeat;
-  box-shadow:var(--shadow);
-  overflow:hidden;
-  position:relative;
-}
-.pin{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  text-align:center;
-  padding:30px 34px;
-  border-radius:28px;
-  background:rgba(255,250,241,.66);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,250,241,.55);
-}
-.dot{
-  width:18px;height:18px;background:var(--terracotta);
-  border-radius:50%;
-  margin:0 auto 14px;
-  box-shadow:0 0 0 10px rgba(175,104,73,.14),0 0 0 24px rgba(175,104,73,.08);
-}
-.pin p{
-  font-family:'Cormorant Garamond',serif;
-  font-style:italic;
-  font-size:29px;
-  color:var(--wood);
-}
-.visit-list{display:grid;gap:22px}
-.visit-block{
-  border-top:1px solid rgba(79,52,35,.14);
-  padding-top:21px;
-}
-.visit-block small{
-  display:block;
-  font-size:10px;
-  text-transform:uppercase;
-  letter-spacing:.28em;
-  color:var(--terracotta);
-  font-weight:700;
-  margin-bottom:8px;
-}
-.visit-block p{font-size:19px;color:var(--wood);line-height:1.55}
-.visit-block span{font-size:13px;color:var(--muted);line-height:1.6}
-.footer{
-  padding:78px 44px;
-  text-align:center;
-  background:var(--wood);
-  color:var(--ivory);
-}
-.footer img{
-  width:150px;
-  margin:0 auto 22px;
-  filter:drop-shadow(0 14px 30px rgba(0,0,0,.2));
-}
-.footer h2{
-  font-family:'Cormorant Garamond',serif;
-  font-size:62px;
-  font-weight:400;
-  color:#f5d4a4;
-}
-.footer p{
-  color:rgba(255,250,241,.58);
-  margin-top:14px;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:.24em;
-}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease}
-.reveal.visible{opacity:1;transform:none}
-/* WHY ZERO */
+.tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(43,35,29,.42))}
+.tile span{position:absolute;left:20px;bottom:18px;z-index:2;color:var(--ivory);font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,26px);font-style:italic}
+
+/* ── WHY ZERO ── */
 .why{background:var(--ink)}
-.why .wrap{padding-top:90px;padding-bottom:90px}
+.why .wrap{padding-top:80px;padding-bottom:80px}
 .why .label{color:var(--sand)}
 .why .title{color:var(--ivory)}
-.why-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
-  background:rgba(255,250,241,.08);
-  border:1px solid rgba(255,250,241,.08);
-  margin-top:52px;
-}
-.why-card{
-  padding:42px 34px;
-  background:rgba(43,35,29,.92);
-  transition:.3s ease;
-}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,250,241,.08);border:1px solid rgba(255,250,241,.08);margin-top:44px}
+.why-card{padding:36px 28px;background:rgba(43,35,29,.92);transition:.3s ease}
 .why-card:hover{background:rgba(79,52,35,.6)}
-.why-card-num{
-  font-family:'Cormorant Garamond',serif;
-  font-size:52px;color:rgba(175,104,73,.35);margin-bottom:16px;
-}
-.why-card h3{
-  font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
-  color:var(--sand);margin-bottom:14px;
-}
-.why-card p{font-size:14px;line-height:1.85;color:rgba(255,250,241,.58)}
+.why-card-num{font-family:'Cormorant Garamond',serif;font-size:46px;color:rgba(175,104,73,.32);margin-bottom:14px}
+.why-card h3{font-size:10px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--sand);margin-bottom:12px}
+.why-card p{font-size:13px;line-height:1.85;color:rgba(255,250,241,.55)}
 
-/* HOW IT WORKS */
+/* ── HOW IT WORKS ── */
 .how{background:linear-gradient(180deg,var(--linen),#fff9ee)}
-.how-steps{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:1px;background:rgba(79,52,35,.12);
-  border:1px solid rgba(79,52,35,.12);
-  margin-top:52px;
-}
-.how-step{
-  background:rgba(255,250,241,.9);
-  padding:36px 30px;
-  position:relative;
-}
-.how-step-n{
-  font-family:'Cormorant Garamond',serif;
-  font-size:72px;line-height:1;
-  color:rgba(175,104,73,.12);
-  position:absolute;top:20px;right:24px;
-}
-.how-step h3{
-  font-size:12px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;
-  color:var(--wood);margin-bottom:12px;
-}
-.how-step p{font-size:14px;line-height:1.85;color:var(--muted)}
-.how-note{
-  margin-top:28px;
-  padding:22px 28px;
-  background:rgba(175,104,73,.08);
-  border-left:3px solid var(--terracotta);
-  font-size:14px;line-height:1.8;color:var(--muted);
-  font-family:'Cormorant Garamond',serif;font-style:italic;
-}
+.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(79,52,35,.12);border:1px solid rgba(79,52,35,.12);margin-top:44px}
+.how-step{background:rgba(255,250,241,.9);padding:32px 26px;position:relative;overflow:hidden}
+.how-step-n{font-family:'Cormorant Garamond',serif;font-size:80px;line-height:1;color:rgba(175,104,73,.10);position:absolute;top:10px;right:18px}
+.how-step h3{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--wood);margin-bottom:10px}
+.how-step p{font-size:13px;line-height:1.85;color:var(--muted)}
+.how-note{margin-top:24px;padding:20px 24px;background:rgba(175,104,73,.08);border-left:3px solid var(--terracotta);font-size:14px;line-height:1.8;color:var(--muted);font-family:'Cormorant Garamond',serif;font-style:italic}
+
+/* ── MENU STYLES ── */
+.menu{background:linear-gradient(180deg,#fff4e4,#fff9ee)}
+.menu-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:44px}
+.menu-head .lead{max-width:420px}
+.menu-tabs{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid rgba(79,52,35,.14)}
+.mtab{font-family:Manrope,system-ui,sans-serif;font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding:10px 16px;border-radius:999px;cursor:pointer;border:1px solid rgba(79,52,35,.22);background:rgba(255,250,241,.56);color:var(--muted);transition:.22s ease}
+.mtab:hover{color:var(--terracotta);border-color:var(--terracotta)}
+.mtab.on{background:var(--ink);color:var(--ivory);border-color:var(--ink)}
+.mpanel{display:none}
+.mpanel.on{display:block;animation:mfade .28s ease}
+@keyframes mfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.mitems{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:rgba(79,52,35,.10);border:1px solid rgba(79,52,35,.10);margin-bottom:8px}
+.mitem{background:rgba(255,250,241,.88);padding:20px 22px;transition:.2s}
+.mitem:hover{background:rgba(255,250,241,1)}
+.mitem-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--wood);margin-bottom:5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mbadge{font-family:Manrope,system-ui,sans-serif;font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:var(--terracotta);color:var(--ivory);padding:3px 7px;border-radius:4px}
+.mveg{font-family:Manrope,system-ui,sans-serif;font-size:8px;font-weight:600;letter-spacing:.10em;text-transform:uppercase;color:#6a8c5a;border:1px solid #6a8c5a;padding:2px 6px;border-radius:4px}
+.mitem-desc{font-size:12px;line-height:1.7;color:var(--muted)}
+.mnote{background:var(--sea);color:var(--ivory);padding:12px 20px;font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;text-align:center;border-radius:8px;margin:14px 0 4px}
+.sauce-box{border:1px solid rgba(79,52,35,.14);border-radius:18px;background:rgba(255,250,241,.6);padding:26px 28px;margin:20px 0}
+.sauce-box-head{text-align:center;margin-bottom:18px}
+.sauce-box-title{font-size:9px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--terracotta);margin-bottom:6px}
+.sauce-box-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--muted)}
+.sauce-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 24px}
+.sauce-name{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--wood);margin-bottom:4px}
+.sauce-desc{font-size:12px;line-height:1.65;color:var(--muted)}
+.sig-note{text-align:center;margin-top:28px;padding:24px;border:1px solid rgba(79,52,35,.14);border-radius:18px;background:rgba(255,250,241,.6)}
+.sig-note-eye{font-size:9px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--terracotta);margin-bottom:6px}
+.sig-note-main{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:28px;color:var(--wood)}
+.sig-note-sub{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+
+/* ── DRINKS ── */
+.drinks{background:linear-gradient(145deg,var(--foam),#f7dfc1 72%)}
+
+/* ── VISIT ── */
+.visit{background:var(--linen)}
+.visit-list{display:grid;gap:20px;margin-top:32px}
+.visit-block{border-top:1px solid rgba(79,52,35,.14);padding-top:18px}
+.visit-block small{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.26em;color:var(--terracotta);font-weight:700;margin-bottom:7px}
+.visit-block p{font-size:17px;color:var(--wood);line-height:1.5}
+.visit-block span{font-size:12px;color:var(--muted);line-height:1.6}
+.map{min-height:420px;border-radius:var(--radius);background:linear-gradient(180deg,rgba(43,35,29,.04),rgba(43,35,29,.20)),url("zero_site_assets/samos-beach-loungers.jpg") center/cover no-repeat;box-shadow:var(--shadow);overflow:hidden;position:relative}
+.pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;padding:26px 30px;border-radius:20px;background:rgba(255,250,241,.7);backdrop-filter:blur(12px);border:1px solid rgba(255,250,241,.55)}
+.dot{width:16px;height:16px;background:var(--terracotta);border-radius:50%;margin:0 auto 12px;box-shadow:0 0 0 8px rgba(175,104,73,.14),0 0 0 20px rgba(175,104,73,.07)}
+.pin p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;color:var(--wood)}
+.qr-block{margin-top:32px;display:flex;align-items:center;gap:20px;border-top:1px solid rgba(79,52,35,.14);padding-top:28px}
+.qr-block img{width:100px;height:100px;border-radius:10px;border:1px solid rgba(79,52,35,.14);flex-shrink:0}
+.qr-text-label{font-size:9px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--terracotta);margin-bottom:6px}
+.qr-text-desc{font-size:13px;line-height:1.65;color:var(--muted)}
+.qr-tap{display:inline-block;margin-top:8px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--terracotta)}
+
+/* ── FOOTER ── */
+.footer{padding:64px 24px;text-align:center;background:var(--wood);color:var(--ivory)}
+.footer img{width:120px;margin:0 auto 18px;filter:drop-shadow(0 12px 24px rgba(0,0,0,.2))}
+.footer h2{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,6vw,62px);font-weight:400;color:#f5d4a4}
+.footer-sub{color:rgba(255,250,241,.55);margin-top:12px;font-size:10px;text-transform:uppercase;letter-spacing:.22em}
+.footer-tagline{margin-top:16px;font-size:14px;font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:.05em;color:rgba(255,250,241,.42)}
+.footer-ig{display:inline-block;margin-top:10px;color:var(--peach);letter-spacing:.18em;font-size:11px}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* ════════════════════════
+   RESPONSIVE — MOBILE
+   ════════════════════════ */
 @media(max-width:900px){
+  /* Nav */
+  .nav{padding:0 16px;height:56px}
+  :root{--nav-h:56px;--announce-h:30px}
+  .nav-links{display:none}
+  .nav-right .nav-cta{display:none}
+  .hamburger{display:flex}
+
+  /* Hero */
+  .coords,.scroll-hint{display:none}
+  h1{font-size:clamp(28px,8vw,52px)}
+  .hero-copy{font-size:15px}
+  .actions{flex-direction:column;align-items:center}
+  .btn{width:100%;max-width:280px;text-align:center;padding:16px 22px}
+
+  /* Sections */
+  .wrap{padding:56px 18px}
+  .two{grid-template-columns:1fr;gap:32px}
+  .two .reveal:first-child{order:1}
+  .photo-card,.photo-card img{min-height:280px}
+
+  /* Story grid */
+  .story-grid{grid-template-columns:1fr}
+
+  /* Gallery */
+  .gallery{grid-template-columns:1fr 1fr;grid-template-rows:180px 180px 180px}
+  .tile:nth-child(1){grid-row:auto}
+  .tile:nth-child(3){grid-row:auto}
+
+  /* Why / How */
   .why-grid,.how-steps{grid-template-columns:1fr}
-  .announce{font-size:9px;padding:8px 16px;letter-spacing:.16em}
-  .nav{top:30px}
+
+  /* Menu */
+  .menu-head{flex-direction:column;gap:16px;align-items:flex-start}
+  .menu-tabs{gap:6px}
+  .mtab{font-size:8px;padding:9px 13px}
+  .mitems{grid-template-columns:1fr}
+  .sauce-grid{grid-template-columns:1fr}
+
+  /* Visit */
+  .two.visit-two{grid-template-columns:1fr}
+  .map{min-height:280px}
+
+  /* QR */
+  .qr-block{flex-direction:column;align-items:flex-start;gap:16px}
+}
+
+@media(max-width:480px){
+  .announce{font-size:8px;letter-spacing:.14em;gap:8px}
+  h1{font-size:clamp(26px,7.5vw,42px)}
+  .gallery{grid-template-columns:1fr;grid-template-rows:220px 160px 220px 160px}
+  .mtab{font-size:8px;padding:8px 12px}
 }
 </style>
 </head>
 <body>
+
+<!-- ANNOUNCE BAR -->
 <div class="announce">
   <div class="announce-dot"></div>
-  Now open · Summer 2026 · Mykali Beach · Daily from 10:00
+  <span data-en="Now open · Summer 2026 · Mykali Beach · Daily from 10:00" data-gr="Ανοιχτά · Καλοκαίρι 2026 · Παραλία Μυκάλης · Καθημερινά από 10:00" data-tr="Açık · Yaz 2026 · Mykali Sahili · Her gün saat 10:00'dan itibaren">Now open · Summer 2026 · Mykali Beach · Daily from 10:00</span>
   <div class="announce-dot"></div>
 </div>
+
+<!-- NAV -->
 <nav class="nav">
   <a class="brand" href="#top">ZERO</a>
-  <ul>
-    <li><a href="#place">The Place</a></li>
-    <li><a href="#atmosphere">Atmosphere</a></li>
-    <li><a href="#menu">Food</a></li>
-    <li><a href="#drinks">Drinks</a></li>
-    <li><a href="#visit">Find Us</a></li>
-    <li><a class="nav-cta" href="#menu">See Menu</a></li>
+  <ul class="nav-links">
+    <li><a href="#place" data-en="The Place" data-gr="Ο Χώρος" data-tr="Mekan">The Place</a></li>
+    <li><a href="#atmosphere" data-en="Atmosphere" data-gr="Ατμόσφαιρα" data-tr="Atmosfer">Atmosphere</a></li>
+    <li><a href="#menu" data-en="Food" data-gr="Φαγητό" data-tr="Yemek">Food</a></li>
+    <li><a href="#drinks" data-en="Drinks" data-gr="Ποτά" data-tr="İçecekler">Drinks</a></li>
+    <li><a href="#visit" data-en="Find Us" data-gr="Βρείτε Μας" data-tr="Bizi Bulun">Find Us</a></li>
   </ul>
-  <div class="lang-toggle">
-    <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
-    <button class="lang-btn" id="btn-gr" onclick="setLang('gr')">ΕΛ</button>
-    <button class="lang-btn" id="btn-tr" onclick="setLang('tr')">TR</button>
+  <div class="nav-right">
+    <a class="nav-cta" href="#menu" data-en="See Menu" data-gr="Δες Μενού" data-tr="Menüyü Gör">See Menu</a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-gr" onclick="setLang('gr')">ΕΛ</button>
+      <button class="lang-btn" id="btn-tr" onclick="setLang('tr')">TR</button>
+    </div>
+    <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
+<!-- MOBILE DRAWER -->
+<nav class="mobile-nav" id="mobile-nav">
+  <a href="#place" onclick="closeMobileNav()" data-en="The Place" data-gr="Ο Χώρος" data-tr="Mekan">The Place</a>
+  <a href="#atmosphere" onclick="closeMobileNav()" data-en="Atmosphere" data-gr="Ατμόσφαιρα" data-tr="Atmosfer">Atmosphere</a>
+  <a href="#menu" onclick="closeMobileNav()" data-en="Food" data-gr="Φαγητό" data-tr="Yemek">Food</a>
+  <a href="#drinks" onclick="closeMobileNav()" data-en="Drinks" data-gr="Ποτά" data-tr="İçecekler">Drinks</a>
+  <a href="#visit" onclick="closeMobileNav()" data-en="Find Us" data-gr="Βρείτε Μας" data-tr="Bizi Bulun">Find Us</a>
+  <div class="mobile-lang">
+    <button class="active" id="mbtn-en" onclick="setLang('en')">EN</button>
+    <button id="mbtn-gr" onclick="setLang('gr')">ΕΛ</button>
+    <button id="mbtn-tr" onclick="setLang('tr')">TR</button>
+  </div>
+</nav>
+
+<!-- HERO -->
 <header class="hero" id="top">
   <div class="hero-bg"></div>
   <div class="hero-inner">
-    <div class="eyebrow reveal">Beach Canteen · Mykalis 0 · Samos</div>
+    <div class="eyebrow reveal" data-en="Beach Canteen · Mykalis 0 · Samos" data-gr="Beach Canteen · Μυκάλης 0 · Σάμος" data-tr="Beach Canteen · Mykalis 0 · Sisam">Beach Canteen · Mykalis 0 · Samos</div>
     <img src="zero_site_assets/zero-logo-transparent.png" class="logo reveal" alt="ZERO Beach Canteen logo">
     <h1 class="reveal">
-      Greece under your feet.<br>
-      <em>Turkey in your eyes.</em><br>
-      ZERO in between.<br>
-      <span class="borderline">Welcome to the borderline of summer.</span>
+      <span data-en="Greece under your feet." data-gr="Ελλάδα κάτω από τα πόδια σου." data-tr="Yunanistan ayaklarının altında.">Greece under your feet.</span><br>
+      <em data-en="Turkey in your eyes." data-gr="Τουρκία στα μάτια σου." data-tr="Türkiye gözlerinde.">Turkey in your eyes.</em><br>
+      <span data-en="ZERO in between." data-gr="ZERO στη μέση." data-tr="ZERO arada.">ZERO in between.</span><br>
+      <span class="borderline" data-en="Welcome to the borderline of summer." data-gr="Καλωσήρθες στο σύνορο του καλοκαιριού." data-tr="Yazın sınır hattına hoş geldiniz.">Welcome to the borderline of summer.</span>
     </h1>
-    <p class="hero-copy reveal">A beach canteen on the edge of Samos — fire bread, cold drinks, sea wind, loud sun, and the strange feeling that you found the place where the map starts to blur.</p>
+    <p class="hero-copy reveal" data-en="A beach canteen on the edge of Samos — fire bread, cold drinks, sea wind, loud sun, and the strange feeling that you found the place where the map starts to blur." data-gr="Ένα beach canteen στην άκρη της Σάμου — ψωμί από φωτιά, κρύα ποτά, αέρας θάλασσας, δυνατός ήλιος, και η παράξενη αίσθηση ότι βρήκες την τοποθεσία που ο χάρτης αρχίζει να θολώνει." data-tr="Sisam'ın ucunda bir plaj kantini — ateş ekmeği, soğuk içecekler, deniz rüzgarı, güçlü güneş ve haritanın bulanıklaşmaya başladığı yeri bulduğunuz garip his.">A beach canteen on the edge of Samos — fire bread, cold drinks, sea wind, loud sun, and the strange feeling that you found the place where the map starts to blur.</p>
     <div class="actions reveal">
-      <a class="btn primary" href="#menu">See The Menu</a>
-      <a class="btn" href="#visit">Find The Secret Spot</a>
+      <a class="btn primary" href="#menu" data-en="See The Menu" data-gr="Δες το Μενού" data-tr="Menüyü Gör">See The Menu</a>
+      <a class="btn" href="#visit" data-en="Find The Secret Spot" data-gr="Βρες το Μυστικό Μέρος" data-tr="Gizli Yeri Bul">Find The Secret Spot</a>
     </div>
   </div>
   <div class="coords">37°41'N · 26°46'E<br>Mykali Beach, Samos</div>
-  <div class="scroll">Scroll</div>
+  <div class="scroll-hint">Scroll</div>
 </header>
 
+<!-- THE PLACE -->
 <section class="story" id="place">
   <div class="wrap">
     <div class="two">
       <div class="reveal">
-        <div class="label">The Place</div>
-        <h2 class="title">Off the map.<br><span class="italic">On island time.</span></h2>
-        <p class="lead">ZERO is not designed to feel polished in the wrong way. It is raw, warm, simple and intentional — a canteen built from sun, sand, rope, fire, music and honest food.</p>
+        <div class="label" data-en="The Place" data-gr="Ο Χώρος" data-tr="Mekan">The Place</div>
+        <h2 class="title">
+          <span data-en="Off the map." data-gr="Εκτός χάρτη." data-tr="Haritanın dışında.">Off the map.</span><br>
+          <span class="italic" data-en="On island time." data-gr="Στον χρόνο του νησιού." data-tr="Ada zamanında.">On island time.</span>
+        </h2>
+        <p class="lead" data-en="ZERO is not designed to feel polished in the wrong way. It is raw, warm, simple and intentional — a canteen built from sun, sand, rope, fire, music and honest food." data-gr="Το ZERO δεν είναι σχεδιασμένο να φαίνεται γυαλισμένο με λάθος τρόπο. Είναι ωμό, ζεστό, απλό και σκόπιμο — ένα canteen φτιαγμένο από ήλιο, άμμο, σχοινί, φωτιά, μουσική και ειλικρινές φαγητό." data-tr="ZERO yanlış şekilde parlak hissettirecek şekilde tasarlanmamıştır. Ham, sıcak, sade ve kasıtlı — güneş, kum, ip, ateş, müzik ve dürüst yemekten inşa edilmiş bir kantin.">ZERO is not designed to feel polished in the wrong way. It is raw, warm, simple and intentional — a canteen built from sun, sand, rope, fire, music and honest food.</p>
       </div>
       <div class="photo-card reveal">
         <img src="zero_site_assets/samos-beach-loungers.jpg" alt="Samos beach atmosphere">
-        <div class="photo-caption">salt air · sun beds · cold drinks</div>
+        <div class="photo-caption" data-en="salt air · sun beds · cold drinks" data-gr="αέρας αλμύρας · ξαπλώστρες · κρύα ποτά" data-tr="tuzlu hava · şezlonglar · soğuk içecekler">salt air · sun beds · cold drinks</div>
       </div>
     </div>
-
     <div class="story-grid reveal">
-      <div class="story-item"><div class="num">01</div><h3>Fire Food</h3><p>House dough fired daily in a Gozney Arc XL. Panuozzo, smash burgers, long fries — beach food built for eating with your hands. No cutlery required.</p></div>
-      <div class="story-item"><div class="num">02</div><h3>Cold Rituals</h3><p>Freddo at 10. Signature cocktail by 2. Whatever you need by sunset. The drink list runs as long as the afternoon does.</p></div>
-      <div class="story-item"><div class="num">03</div><h3>Found, Not Forced</h3><p>Self-service. No reservations. No dress code. You order, you find your spot, you stay as long as the sun lets you. This is how it works here — and it works.</p></div>
+      <div class="story-item">
+        <div class="num">01</div>
+        <h3 data-en="Fire Food" data-gr="Φαγητό Φωτιάς" data-tr="Ateş Yemeği">Fire Food</h3>
+        <p data-en="House dough fired daily in a Gozney Arc XL. Panuozzo, smash burgers, long fries — beach food built for eating with your hands. No cutlery required." data-gr="Ζύμη σπιτιού ψημένη καθημερινά σε Gozney Arc XL. Panuozzo, smash burgers, long fries — φαγητό παραλίας φτιαγμένο για να τρώγεται με τα χέρια. Δεν χρειάζονται μαχαιροπίρουνα." data-tr="Her gün Gozney Arc XL'de pişirilen ev hamuru. Panuozzo, smash burger, uzun patates — ellerinizle yemek için yapılmış plaj yemeği. Çatal bıçak gerekmez.">House dough fired daily in a Gozney Arc XL. Panuozzo, smash burgers, long fries — beach food built for eating with your hands. No cutlery required.</p>
+      </div>
+      <div class="story-item">
+        <div class="num">02</div>
+        <h3 data-en="Cold Rituals" data-gr="Κρύα Τελετουργικά" data-tr="Soğuk Ritüeller">Cold Rituals</h3>
+        <p data-en="Freddo at 10. Signature cocktail by 2. Whatever you need by sunset. The drink list runs as long as the afternoon does." data-gr="Freddo στις 10. Signature cocktail στις 2. Ό,τι χρειαστείς μέχρι το ηλιοβασίλεμα. Η λίστα ποτών τρέχει όσο και το απόγευμα." data-tr="Saat 10'da freddo. 2'de imza kokteyli. Gün batımına kadar ihtiyacın olan her şey. İçecek listesi öğleden sonra kadar uzanır.">Freddo at 10. Signature cocktail by 2. Whatever you need by sunset. The drink list runs as long as the afternoon does.</p>
+      </div>
+      <div class="story-item">
+        <div class="num">03</div>
+        <h3 data-en="Found, Not Forced" data-gr="Βρεμένο, Όχι Επιβεβλημένο" data-tr="Bulundu, Zorlanmadı">Found, Not Forced</h3>
+        <p data-en="Self-service. No reservations. No dress code. You order, you find your spot, you stay as long as the sun lets you. This is how it works here — and it works." data-gr="Self-service. Χωρίς κρατήσεις. Χωρίς dress code. Παραγγέλνεις, βρίσκεις τη θέση σου, μένεις όσο σε αφήνει ο ήλιος. Έτσι λειτουργεί εδώ — και λειτουργεί." data-tr="Self-servis. Rezervasyon yok. Kıyafet kuralı yok. Sipariş ver, yerini bul, güneş izin verdiği sürece kal. Burada böyle çalışıyor — ve işe yarıyor.">Self-service. No reservations. No dress code. You order, you find your spot, you stay as long as the sun lets you. This is how it works here — and it works.</p>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- ATMOSPHERE -->
 <section class="atmosphere" id="atmosphere">
   <div class="wrap">
-    <div class="label reveal">Atmosphere</div>
-    <h2 class="title reveal">summer, softened<br><span class="italic">into color.</span></h2>
-    <p class="lead reveal">Pastel sun. Washed sea blue. Warm sand. Terracotta shadows. A calm tropical boho palette built for memory, not noise.</p>
+    <div class="label reveal" data-en="Atmosphere" data-gr="Ατμόσφαιρα" data-tr="Atmosfer">Atmosphere</div>
+    <h2 class="title reveal">
+      <span data-en="summer, softened" data-gr="καλοκαίρι, μαλακωμένο" data-tr="yaz, yumuşatılmış">summer, softened</span><br>
+      <span class="italic" data-en="into color." data-gr="σε χρώμα." data-tr="renge.">into color.</span>
+    </h2>
+    <p class="lead reveal" data-en="Pastel sun. Washed sea blue. Warm sand. Terracotta shadows. A calm tropical boho palette built for memory, not noise." data-gr="Παστέλ ήλιος. Ξεβαμμένο μπλε θάλασσας. Ζεστή άμμος. Σκιές τερακότα. Μια ήρεμη τροπική boho παλέτα φτιαγμένη για μνήμη, όχι για θόρυβο." data-tr="Pastel güneş. Solmuş deniz mavisi. Sıcak kum. Kiremit rengi gölgeler. Gürültü değil, bellek için yapılmış sakin tropikal boho paleti.">Pastel sun. Washed sea blue. Warm sand. Terracotta shadows. A calm tropical boho palette built for memory, not noise.</p>
     <div class="gallery reveal">
-      <div class="tile"><img src="zero_site_assets/samos-beach-hero.jpg" alt="Samos beach"><span>salt air</span></div>
-      <div class="tile"><img src="zero_site_assets/iced-coffee.jpg" alt="Iced coffee"><span>freddo hour</span></div>
-      <div class="tile"><img src="zero_site_assets/palm-sunset.jpg" alt="Palm sunset"><span>linen light</span></div>
-      <div class="tile"><img src="zero_site_assets/cocktail-beach.jpg" alt="Cocktail beach"><span>cold drinks</span></div>
+      <div class="tile"><img src="zero_site_assets/samos-beach-hero.jpg" alt="Samos beach"><span data-en="salt air" data-gr="αέρας αλμύρας" data-tr="tuzlu hava">salt air</span></div>
+      <div class="tile"><img src="zero_site_assets/iced-coffee.jpg" alt="Iced coffee"><span data-en="freddo hour" data-gr="ώρα freddo" data-tr="freddo saati">freddo hour</span></div>
+      <div class="tile"><img src="zero_site_assets/palm-sunset.jpg" alt="Palm sunset"><span data-en="linen light" data-gr="φως λινού" data-tr="keten ışık">linen light</span></div>
+      <div class="tile"><img src="zero_site_assets/cocktail-beach.jpg" alt="Cocktail beach"><span data-en="cold drinks" data-gr="κρύα ποτά" data-tr="soğuk içecekler">cold drinks</span></div>
     </div>
   </div>
 </section>
@@ -590,23 +438,26 @@ section{position:relative}
 <!-- WHY ZERO -->
 <section class="why">
   <div class="wrap">
-    <div class="label reveal">Why Zero</div>
-    <h2 class="title reveal">Three reasons.<br><span class="italic">One place.</span></h2>
+    <div class="label reveal" data-en="Why Zero" data-gr="Γιατί Zero" data-tr="Neden Zero">Why Zero</div>
+    <h2 class="title reveal">
+      <span data-en="Three reasons." data-gr="Τρεις λόγοι." data-tr="Üç neden.">Three reasons.</span><br>
+      <span class="italic" data-en="One place." data-gr="Ένα μέρος." data-tr="Bir yer.">One place.</span>
+    </h2>
     <div class="why-grid reveal">
       <div class="why-card">
         <div class="why-card-num">01</div>
-        <h3>Edge of Samos</h3>
-        <p>Sit on the Greek side and look straight across to Turkey. No other beach bar in the Aegean gives you that view with a cold drink in hand. This is the actual edge of Europe.</p>
+        <h3 data-en="Edge of Samos" data-gr="Άκρη της Σάμου" data-tr="Sisam'ın Ucu">Edge of Samos</h3>
+        <p data-en="Sit on the Greek side and look straight across to Turkey. No other beach bar in the Aegean gives you that view with a cold drink in hand. This is the actual edge of Europe." data-gr="Κάθισε στην ελληνική πλευρά και κοίταξε κατευθείαν προς την Τουρκία. Κανένα άλλο beach bar στο Αιγαίο δεν σου δίνει αυτή τη θέα με ένα κρύο ποτό στο χέρι. Αυτή είναι η πραγματική άκρη της Ευρώπης." data-tr="Yunan tarafında oturun ve Türkiye'ye doğru bakın. Ege'deki hiçbir plaj barı elinizdeki soğuk içecekle birlikte size bu manzarayı sunmaz. Bu Avrupa'nın gerçek ucu.">Sit on the Greek side and look straight across to Turkey. No other beach bar in the Aegean gives you that view with a cold drink in hand. This is the actual edge of Europe.</p>
       </div>
       <div class="why-card">
         <div class="why-card-num">02</div>
-        <h3>Fire Bread</h3>
-        <p>Our dough is made here and fired daily in a Gozney Arc XL. Panuozzo, burgers, club sandwiches — everything starts from scratch. Most beach bars don't bother. We can't not bother.</p>
+        <h3 data-en="Fire Bread" data-gr="Ψωμί Φωτιάς" data-tr="Ateş Ekmeği">Fire Bread</h3>
+        <p data-en="Our dough is made here and fired daily in a Gozney Arc XL. Panuozzo, burgers, club sandwiches — everything starts from scratch. Most beach bars don't bother. We can't not bother." data-gr="Η ζύμη μας φτιάχνεται εδώ και ψήνεται καθημερινά σε Gozney Arc XL. Panuozzo, burgers, club sandwiches — όλα ξεκινούν από μηδέν. Τα περισσότερα beach bars δεν ασχολούνται. Εμείς δεν μπορούμε να μην ασχοληθούμε." data-tr="Hamurumuzu burada yapıyor ve her gün Gozney Arc XL'de pişiriyoruz. Panuozzo, burger, kulüp sandviç — her şey sıfırdan başlar. Çoğu plaj barı bu zahmete girmez. Biz girmeden edemeyiz.">Our dough is made here and fired daily in a Gozney Arc XL. Panuozzo, burgers, club sandwiches — everything starts from scratch. Most beach bars don't bother. We can't not bother.</p>
       </div>
       <div class="why-card">
         <div class="why-card-num">03</div>
-        <h3>Secret Beach Energy</h3>
-        <p>Sunbeds, cold drinks, salt air, music running low. The kind of place people find by accident and come back for on purpose. No signs. No algorithm. Just word of mouth and a pin on a map.</p>
+        <h3 data-en="Secret Beach Energy" data-gr="Ενέργεια Μυστικής Παραλίας" data-tr="Gizli Plaj Enerjisi">Secret Beach Energy</h3>
+        <p data-en="Sunbeds, cold drinks, salt air, music running low. The kind of place people find by accident and come back for on purpose. No signs. No algorithm. Just word of mouth and a pin on a map." data-gr="Ξαπλώστρες, κρύα ποτά, αέρας αλμύρας, μουσική σε χαμηλή ένταση. Το είδος του μέρους που οι άνθρωποι βρίσκουν τυχαία και επιστρέφουν επίτηδες. Χωρίς πινακίδες. Χωρίς αλγόριθμο. Μόνο από στόμα σε στόμα και μια καρφίτσα στον χάρτη." data-tr="Şezlonglar, soğuk içecekler, tuzlu hava, alçak müzik. İnsanların kazara bulduğu ve kasıtlı olarak geri döndüğü türden bir yer. Tabela yok. Algoritma yok. Sadece ağızdan ağza ve haritada bir iğne.">Sunbeds, cold drinks, salt air, music running low. The kind of place people find by accident and come back for on purpose. No signs. No algorithm. Just word of mouth and a pin on a map.</p>
       </div>
     </div>
   </div>
@@ -615,232 +466,90 @@ section{position:relative}
 <!-- HOW IT WORKS -->
 <section class="how">
   <div class="wrap">
-    <div class="label reveal">How It Works</div>
-    <h2 class="title reveal">No waiters.<br><span class="italic">No waiting.</span></h2>
+    <div class="label reveal" data-en="How It Works" data-gr="Πώς Λειτουργεί" data-tr="Nasıl Çalışır">How It Works</div>
+    <h2 class="title reveal">
+      <span data-en="No waiters." data-gr="Χωρίς σερβιτόρους." data-tr="Garson yok.">No waiters.</span><br>
+      <span class="italic" data-en="No waiting." data-gr="Χωρίς αναμονή." data-tr="Bekleme yok.">No waiting.</span>
+    </h2>
     <div class="how-steps reveal">
       <div class="how-step">
         <div class="how-step-n">1</div>
-        <h3>Order at the counter</h3>
-        <p>Walk up, choose what you want, pay. We'll give you a number. The menu is on your phone — scan the QR at the entrance or find it at zero-canteen.vercel.app</p>
+        <h3 data-en="Order at the counter" data-gr="Παραγγελία στον πάγκο" data-tr="Tezgahta sipariş ver">Order at the counter</h3>
+        <p data-en="Walk up, choose what you want, pay. We'll give you a number. The menu is on your phone — scan the QR at the entrance." data-gr="Πήγαινε, διάλεξε τι θέλεις, πλήρωσε. Θα σου δώσουμε έναν αριθμό. Το μενού είναι στο κινητό σου — σκανάρε το QR στην είσοδο." data-tr="Gel, ne istediğini seç, öde. Sana bir numara vereceğiz. Menü telefonunda — girişte QR'ı tara.">Walk up, choose what you want, pay. We'll give you a number. The menu is on your phone — scan the QR at the entrance.</p>
       </div>
       <div class="how-step">
         <div class="how-step-n">2</div>
-        <h3>Find your spot</h3>
-        <p>Sunbeds, sand, or shade — take what's free. There's no reservation system and no table service. The whole beach is yours.</p>
+        <h3 data-en="Find your spot" data-gr="Βρες τη θέση σου" data-tr="Yerini bul">Find your spot</h3>
+        <p data-en="Sunbeds, sand, or shade — take what's free. No reservation system, no table service. The whole beach is yours." data-gr="Ξαπλώστρες, άμμος ή σκιά — πάρε ό,τι είναι ελεύθερο. Χωρίς σύστημα κρατήσεων, χωρίς σερβίρισμα στο τραπέζι. Όλη η παραλία είναι δική σου." data-tr="Şezlong, kum ya da gölge — ne boşsa al. Rezervasyon sistemi yok, masa servisi yok. Tüm plaj senin.">Sunbeds, sand, or shade — take what's free. No reservation system, no table service. The whole beach is yours.</p>
       </div>
       <div class="how-step">
         <div class="how-step-n">3</div>
-        <h3>We bring it to you</h3>
-        <p>When your food is ready we'll find you by number. Drinks you collect at the counter. Keep your afternoon exactly as slow as you planned it.</p>
+        <h3 data-en="We bring it to you" data-gr="Σου το φέρνουμε εμείς" data-tr="Biz getiririz">We bring it to you</h3>
+        <p data-en="When your food is ready we'll find you by number. Drinks you collect at the counter. Keep your afternoon exactly as slow as you planned it." data-gr="Όταν το φαγητό σου είναι έτοιμο, θα σε βρούμε με τον αριθμό. Τα ποτά τα παίρνεις εσύ από τον πάγκο. Κράτα το απόγευμα ακριβώς τόσο αργό όσο το σχεδίασες." data-tr="Yemeğin hazır olunca seni numaranla bulacağız. İçecekleri tezgahtan kendin alırsın. Öğleden sonranı tam planladığın kadar yavaş tut.">When your food is ready we'll find you by number. Drinks you collect at the counter. Keep your afternoon exactly as slow as you planned it.</p>
       </div>
     </div>
-    <div class="how-note reveal">
-      ZERO is a self-service canteen. We designed it that way on purpose — so the service never interrupts the afternoon, and the afternoon never has to end on someone else's schedule.
-    </div>
+    <div class="how-note reveal" data-en="ZERO is a self-service canteen. We designed it that way on purpose — so the service never interrupts the afternoon, and the afternoon never has to end on someone else's schedule." data-gr="Το ZERO είναι ένα self-service canteen. Το σχεδιάσαμε έτσι επίτηδες — για να μη διακόπτει ποτέ η υπηρεσία το απόγευμα, και το απόγευμα να μην τελειώνει ποτέ με βάση το πρόγραμμα κάποιου άλλου." data-tr="ZERO bir self-servis kantindir. Bunu kasıtlı olarak böyle tasarladık — servis öğleden sonrayı asla kesmesin, öğleden sonra da başkasının programına göre bitmek zorunda kalmasın.">ZERO is a self-service canteen. We designed it that way on purpose — so the service never interrupts the afternoon, and the afternoon never has to end on someone else's schedule.</div>
   </div>
 </section>
 
+<!-- FOOD MENU -->
 <style>
-/* ── FULL MENU STYLES ── */
-.menu-tabs{
-  display:flex;flex-wrap:wrap;gap:8px;
-  margin-bottom:40px;
-  padding-bottom:24px;
-  border-bottom:1px solid rgba(79,52,35,.14);
-}
-.mtab{
-  font-family:Manrope,system-ui,sans-serif;
-  font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
-  padding:11px 20px;border-radius:999px;cursor:pointer;
-  border:1px solid rgba(79,52,35,.22);
-  background:rgba(255,250,241,.56);
-  color:var(--muted);
-  transition:.22s ease;
-}
-.mtab:hover{color:var(--terracotta);border-color:var(--terracotta)}
-.mtab.on{background:var(--ink);color:var(--ivory);border-color:var(--ink)}
-.mpanel{display:none}
-.mpanel.on{display:block;animation:mfade .28s ease}
-@keyframes mfade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.mcat{
-  display:flex;align-items:center;gap:16px;
-  margin:36px 0 20px;
-}
-.mcat:first-child{margin-top:0}
-.mcat-title{
-  font-size:10px;font-weight:700;letter-spacing:.32em;text-transform:uppercase;
-  color:var(--terracotta);white-space:nowrap;
-}
-.mcat-line{flex:1;height:1px;background:rgba(79,52,35,.14)}
-.mitems{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-  gap:1px;
-  background:rgba(79,52,35,.10);
-  border:1px solid rgba(79,52,35,.10);
-  margin-bottom:8px;
-}
-.mitem{
-  background:rgba(255,250,241,.88);
-  padding:22px 24px;
-  transition:.2s;
-}
-.mitem:hover{background:rgba(255,250,241,1)}
-.mitem-name{
-  font-family:'Cormorant Garamond',serif;
-  font-size:22px;font-weight:400;
-  color:var(--wood);margin-bottom:6px;
-  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-}
-.mbadge{
-  font-family:Manrope,system-ui,sans-serif;
-  font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
-  background:var(--terracotta);color:var(--ivory);
-  padding:3px 8px;border-radius:4px;
-}
-.mveg{
-  font-family:Manrope,system-ui,sans-serif;
-  font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-  color:#6a8c5a;border:1px solid #6a8c5a;
-  padding:2px 7px;border-radius:4px;
-}
-.mitem-desc{font-size:13px;line-height:1.75;color:var(--muted)}
-.mnote{
-  background:var(--sea);color:var(--ivory);
-  padding:14px 24px;font-size:10px;font-weight:600;
-  letter-spacing:.22em;text-transform:uppercase;text-align:center;
-  border-radius:10px;margin:16px 0 4px;
-}
-.sauce-box{
-  border:1px solid rgba(79,52,35,.14);
-  border-radius:22px;
-  background:rgba(255,250,241,.6);
-  padding:30px 32px;
-  margin:24px 0;
-}
-.sauce-box-head{text-align:center;margin-bottom:22px}
-.sauce-box-title{
-  font-size:10px;font-weight:700;letter-spacing:.32em;text-transform:uppercase;
-  color:var(--terracotta);margin-bottom:6px;
-}
-.sauce-box-sub{
-  font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:19px;color:var(--muted);
-}
-.sauce-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:18px 30px;
-}
-.sauce-name{
-  font-family:'Cormorant Garamond',serif;
-  font-size:20px;color:var(--wood);margin-bottom:4px;
-}
-.sauce-desc{font-size:13px;line-height:1.7;color:var(--muted)}
-.sig-note{
-  text-align:center;margin-top:32px;
-  padding:28px 24px;
-  border:1px solid rgba(79,52,35,.14);
-  border-radius:22px;
-  background:rgba(255,250,241,.6);
-}
-.sig-note-eye{font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--terracotta);margin-bottom:6px}
-.sig-note-main{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:32px;color:var(--wood)}
-.sig-note-sub{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:6px}
-@media(max-width:700px){
-  .sauce-grid{grid-template-columns:1fr}
-  .mitems{grid-template-columns:1fr}
+@media(max-width:900px){
+  .menu-head{flex-direction:column!important;gap:14px!important;align-items:flex-start!important}
 }
 </style>
-
 <section class="menu" id="menu">
   <div class="wrap">
     <div class="menu-head">
       <div>
-        <div class="label reveal" data-en="Food" data-gr="Φαγητό" data-tr="Food" data-tr="Yemek">Food</div>
+        <div class="label reveal" data-en="Food" data-gr="Φαγητό" data-tr="Yemek">Food</div>
         <h2 class="title reveal">
-          <span data-en="made here." data-gr="φτιάχνεται εδώ." data-tr="made here." data-tr="burada yapılır.">made here.</span><br>
-          <span class="italic" data-en="fired here." data-gr="ψήνεται εδώ." data-tr="fired here." data-tr="burada pişirilir.">fired here.</span>
+          <span data-en="made here." data-gr="φτιάχνεται εδώ." data-tr="burada yapılır.">made here.</span><br>
+          <span class="italic" data-en="fired here." data-gr="ψήνεται εδώ." data-tr="burada pişirilir.">fired here.</span>
         </h2>
       </div>
-      <p class="lead reveal" data-en="Not restaurant food. Not fast food. Fire food. Everything made in-house, fired to order in a Gozney Arc XL." data-gr="Όχι εστιατόριο. Όχι fast food. Φαγητό από φωτιά. Όλα φτιαγμένα εδώ, ψημένα κατά παραγγελία." data-tr="Restoran yemeği değil. Fast food değil. Ateş yemeği. Her şey sipariş üzerine, yerinde yapılır.">Not restaurant food. Not fast food. Fire food. Everything made in-house, fired to order in a Gozney Arc XL.</p>
+      <p class="lead reveal" data-en="Not restaurant food. Not fast food. Fire food. Everything made in-house, fired to order in a Gozney Arc XL." data-gr="Όχι εστιατόριο. Όχι fast food. Φαγητό από φωτιά. Όλα φτιαγμένα εδώ, ψημένα κατά παραγγελία σε Gozney Arc XL." data-tr="Restoran yemeği değil. Fast food değil. Ateş yemeği. Her şey Gozney Arc XL'de sipariş üzerine pişirilir.">Not restaurant food. Not fast food. Fire food. Everything made in-house, fired to order in a Gozney Arc XL.</p>
     </div>
 
-    <!-- FOOD TABS -->
     <div class="menu-tabs reveal">
-      <button class="mtab on"  onclick="mswitch('food','sandwiches',this)" data-en="Sandwiches &amp; Panuozzo" data-gr="Σάντουιτς &amp; Panuozzo" data-tr="Sandwiches &amp; Panuozzo" data-tr="Sandviç &amp; Panuozzo">Sandwiches &amp; Panuozzo</button>
-      <button class="mtab"     onclick="mswitch('food','burgers',this)" data-en="Burgers" data-gr="Μπέργκερ" data-tr="Burgers" data-tr="Burgerler">Burgers</button>
-      <button class="mtab"     onclick="mswitch('food','clubs',this)" data-en="Club Sandwiches" data-gr="Κλαμπ Σάντουιτς" data-tr="Club Sandwiches" data-tr="Kulüp Sandviç">Club Sandwiches</button>
-      <button class="mtab"     onclick="mswitch('food','sides',this)" data-en="Sides" data-gr="Συνοδευτικά" data-tr="Sides" data-tr="Garnitürler">Sides</button>
-      <button class="mtab"     onclick="mswitch('food','salads',this)" data-en="Salads" data-gr="Σαλάτες" data-tr="Salads" data-tr="Salatalar">Salads</button>
-      <button class="mtab"     onclick="mswitch('food','desserts',this)" data-en="Desserts" data-gr="Επιδόρπια" data-tr="Desserts" data-tr="Tatlılar">Desserts</button>
+      <button class="mtab on" onclick="mswitch('food','sandwiches',this)" data-en="Sandwiches &amp; Panuozzo" data-gr="Σάντουιτς &amp; Panuozzo" data-tr="Sandviç &amp; Panuozzo">Sandwiches &amp; Panuozzo</button>
+      <button class="mtab" onclick="mswitch('food','burgers',this)" data-en="Burgers" data-gr="Μπέργκερ" data-tr="Burgerler">Burgers</button>
+      <button class="mtab" onclick="mswitch('food','clubs',this)" data-en="Club Sandwiches" data-gr="Κλαμπ Σάντουιτς" data-tr="Kulüp Sandviç">Club Sandwiches</button>
+      <button class="mtab" onclick="mswitch('food','sides',this)" data-en="Sides" data-gr="Συνοδευτικά" data-tr="Garnitürler">Sides</button>
+      <button class="mtab" onclick="mswitch('food','salads',this)" data-en="Salads" data-gr="Σαλάτες" data-tr="Salatalar">Salads</button>
+      <button class="mtab" onclick="mswitch('food','desserts',this)" data-en="Desserts" data-gr="Επιδόρπια" data-tr="Tatlılar">Desserts</button>
     </div>
 
-    <!-- SANDWICHES & PANUOZZO -->
     <div class="mpanel on" id="food-sandwiches">
       <div class="mitems">
-        <div class="mitem">
-          <div class="mitem-name">Holy Bird 🔥</div>
-          <div class="mitem-desc" data-en="Fried chicken, mozzarella, iceberg slaw, bacon, charred green peppers, ZERO smash sauce, pickle" data-gr="Τηγανητό κοτόπουλο, μοτσαρέλα, iceberg slaw, bacon, ψητά λαχανικά, σως ZERO smash, πίκλα" data-tr="Kızarmış tavuk, mozzarella, iceberg salatası, bacon, közlenmiş yeşil biber, ZERO smash sos, turşu">Fried chicken, mozzarella, iceberg slaw, bacon, charred green peppers, ZERO smash sauce, pickle</div>
-        </div>
-        <div class="mitem">
-          <div class="mitem-name">The Undertaker</div>
-          <div class="mitem-desc" data-en="Frankfurt, cheddar sauce, cabbage &amp; carrot slaw, crispy onions, pickle, ZERO smash sauce" data-gr="Λουκάνικο φρανκφούρτης, cheddar sauce, coleslaw λάχανο &amp; καρότο, crispy onions, πίκλα, σως ZERO smash" data-tr="Frankfurt sosis, cheddar sos, lahana &amp; havuç salatası, çıtır soğan, turşu, ZERO smash sos">Frankfurt, cheddar sauce, cabbage &amp; carrot slaw, crispy onions, pickle, ZERO smash sauce</div>
-        </div>
-        <div class="mitem">
-          <div class="mitem-name">The Bosphorus</div>
-          <div class="mitem-desc" data-en="Döner, yoghurt sauce, tomato, onion, cucumber, sumac, feta, iceberg slaw" data-gr="Ντονέρ, σως γιαουρτιού, ντομάτα, κρεμμύδι, αγγούρι, σουμάκ, φέτα, iceberg slaw" data-tr="Döner, yoğurt sosu, domates, soğan, salatalık, sumak, beyaz peynir, iceberg salatası">Döner, yoghurt sauce, tomato, onion, cucumber, sumac, feta, iceberg slaw</div>
-        </div>
-        <div class="mitem">
-          <div class="mitem-name">Smooth Operator <span class="mveg">V</span></div>
-          <div class="mitem-desc" data-en="Feta, tomato, cucumber, onion, olives, yogurt spread, charred green peppers, olive oil" data-gr="Φέτα, ντομάτα, αγγούρι, κρεμμύδι, ελιές, άλειμμα γιαουρτιού, ψητά λαχανικά, ελαιόλαδο" data-tr="Beyaz peynir, domates, salatalık, soğan, zeytin, yoğurt ezmesi, közlenmiş yeşil biber, zeytinyağı">Feta, tomato, cucumber, onion, olives, yogurt spread, charred green peppers, olive oil</div>
-        </div>
-        <div class="mitem">
-          <div class="mitem-name">The Greek Affair <span class="mveg">V</span></div>
-          <div class="mitem-desc" data-en="Feta, tomato, cucumber, onion, olives, pickle, yoghurt spread, olive oil" data-gr="Φέτα, ντομάτα, αγγούρι, κρεμμύδι, ελιές, πίκλα, άλειμμα γιαουρτιού, ελαιόλαδο" data-tr="Beyaz peynir, domates, salatalık, soğan, zeytin, turşu, yoğurt ezmesi, zeytinyağı">Feta, tomato, cucumber, onion, olives, pickle, yoghurt spread, olive oil</div>
-        </div>
+        <div class="mitem"><div class="mitem-name">Holy Bird 🔥</div><div class="mitem-desc" data-en="Fried chicken, mozzarella, iceberg slaw, bacon, charred green peppers, ZERO smash sauce, pickle" data-gr="Τηγανητό κοτόπουλο, μοτσαρέλα, iceberg slaw, bacon, ψητά λαχανικά, σως ZERO smash, πίκλα" data-tr="Kızarmış tavuk, mozzarella, iceberg salatası, bacon, közlenmiş yeşil biber, ZERO smash sos, turşu">Fried chicken, mozzarella, iceberg slaw, bacon, charred green peppers, ZERO smash sauce, pickle</div></div>
+        <div class="mitem"><div class="mitem-name">The Undertaker</div><div class="mitem-desc" data-en="Frankfurt, cheddar sauce, cabbage &amp; carrot slaw, crispy onions, pickle, ZERO smash sauce" data-gr="Λουκάνικο φρανκφούρτης, cheddar sauce, coleslaw λάχανο &amp; καρότο, crispy onions, πίκλα, σως ZERO smash" data-tr="Frankfurt sosis, cheddar sos, lahana &amp; havuç salatası, çıtır soğan, turşu, ZERO smash sos">Frankfurt, cheddar sauce, cabbage &amp; carrot slaw, crispy onions, pickle, ZERO smash sauce</div></div>
+        <div class="mitem"><div class="mitem-name">The Bosphorus</div><div class="mitem-desc" data-en="Döner, yoghurt sauce, tomato, onion, cucumber, sumac, feta, iceberg slaw" data-gr="Ντονέρ, σως γιαουρτιού, ντομάτα, κρεμμύδι, αγγούρι, σουμάκ, φέτα, iceberg slaw" data-tr="Döner, yoğurt sosu, domates, soğan, salatalık, sumak, beyaz peynir, iceberg salatası">Döner, yoghurt sauce, tomato, onion, cucumber, sumac, feta, iceberg slaw</div></div>
+        <div class="mitem"><div class="mitem-name">Smooth Operator <span class="mveg">V</span></div><div class="mitem-desc" data-en="Feta, tomato, cucumber, onion, olives, yogurt spread, charred green peppers, olive oil" data-gr="Φέτα, ντομάτα, αγγούρι, κρεμμύδι, ελιές, άλειμμα γιαουρτιού, ψητά λαχανικά, ελαιόλαδο" data-tr="Beyaz peynir, domates, salatalık, soğan, zeytin, yoğurt ezmesi, közlenmiş yeşil biber, zeytinyağı">Feta, tomato, cucumber, onion, olives, yogurt spread, charred green peppers, olive oil</div></div>
+        <div class="mitem"><div class="mitem-name">The Greek Affair <span class="mveg">V</span></div><div class="mitem-desc" data-en="Feta, tomato, cucumber, onion, olives, pickle, yoghurt spread, olive oil" data-gr="Φέτα, ντομάτα, αγγούρι, κρεμμύδι, ελιές, πίκλα, άλειμμα γιαουρτιού, ελαιόλαδο" data-tr="Beyaz peynir, domates, salatalık, soğan, zeytin, turşu, yoğurt ezmesi, zeytinyağı">Feta, tomato, cucumber, onion, olives, pickle, yoghurt spread, olive oil</div></div>
       </div>
     </div>
 
-    <!-- BURGERS -->
     <div class="mpanel" id="food-burgers">
       <div class="mitems">
-        <div class="mitem">
-          <div class="mitem-name">Smash Me Baby <span class="mbadge" data-en="Signature" data-gr="Signature" data-tr="Signature">Signature</span></div>
-          <div class="mitem-desc" data-en="Double smash beef, bacon, iceberg slaw, tomato, crispy onions, cheddar sauce, pickle, ZERO smash sauce" data-gr="Διπλό smash μοσχάρι, bacon, iceberg slaw, ντομάτα, crispy onions, cheddar sauce, πίκλα, σως ZERO smash" data-tr="Çift smash dana eti, bacon, iceberg salatası, domates, çıtır soğan, cheddar sos, turşu, ZERO smash sos">Double smash beef, bacon, iceberg slaw, tomato, crispy onions, cheddar sauce, pickle, ZERO smash sauce</div>
-        </div>
-        <div class="mitem">
-          <div class="mitem-name">Golden Crunch</div>
-          <div class="mitem-desc" data-en="Crispy chicken, cheddar sauce, cabbage &amp; carrot slaw, tomato, crispy onions, pickle, kewpie aioli" data-gr="Τραγανό κοτόπουλο, cheddar sauce, coleslaw λάχανο &amp; καρότο, ντομάτα, crispy onions, πίκλα, kewpie aioli" data-tr="Çıtır tavuk, cheddar sos, lahana &amp; havuç salatası, domates, çıtır soğan, turşu, kewpie aioli">Crispy chicken, cheddar sauce, cabbage &amp; carrot slaw, tomato, crispy onions, pickle, kewpie aioli</div>
-        </div>
+        <div class="mitem"><div class="mitem-name">Smash Me Baby <span class="mbadge" data-en="Signature" data-gr="Signature" data-tr="Signature">Signature</span></div><div class="mitem-desc" data-en="Double smash beef, bacon, iceberg slaw, tomato, crispy onions, cheddar sauce, pickle, ZERO smash sauce" data-gr="Διπλό smash μοσχάρι, bacon, iceberg slaw, ντομάτα, crispy onions, cheddar sauce, πίκλα, σως ZERO smash" data-tr="Çift smash dana eti, bacon, iceberg salatası, domates, çıtır soğan, cheddar sos, turşu, ZERO smash sos">Double smash beef, bacon, iceberg slaw, tomato, crispy onions, cheddar sauce, pickle, ZERO smash sauce</div></div>
+        <div class="mitem"><div class="mitem-name">Golden Crunch</div><div class="mitem-desc" data-en="Crispy chicken, cheddar sauce, cabbage &amp; carrot slaw, tomato, crispy onions, pickle, kewpie aioli" data-gr="Τραγανό κοτόπουλο, cheddar sauce, coleslaw λάχανο &amp; καρότο, ντομάτα, crispy onions, πίκλα, kewpie aioli" data-tr="Çıtır tavuk, cheddar sos, lahana &amp; havuç salatası, domates, çıtır soğan, turşu, kewpie aioli">Crispy chicken, cheddar sauce, cabbage &amp; carrot slaw, tomato, crispy onions, pickle, kewpie aioli</div></div>
       </div>
       <div class="mnote" data-en="All burgers served with long fries" data-gr="Όλα τα μπέργκερ σερβίρονται με long fries" data-tr="Tüm burgerler uzun patates kızartması ile servis edilir">All burgers served with long fries</div>
     </div>
 
-    <!-- CLUB SANDWICHES -->
     <div class="mpanel" id="food-clubs">
       <div class="mitems">
-        <div class="mitem">
-          <div class="mitem-name">Soft Crime</div>
-          <div class="mitem-desc" data-en="Turkey, bacon, mozzarella, tomato, iceberg slaw, roasted green peppers, ZERO smash sauce" data-gr="Γαλοπούλα, bacon, μοτσαρέλα, ντομάτα, iceberg slaw, cheddar sauce, σως ZERO smash" data-tr="Hindi, bacon, mozzarella, domates, iceberg salatası, kızarmış yeşil biber, ZERO smash sos">Turkey, bacon, mozzarella, tomato, iceberg slaw, roasted green peppers, ZERO smash sauce</div>
-        </div>
-        <div class="mitem">
-          <div class="mitem-name">Chicken Frequency ⚡</div>
-          <div class="mitem-desc" data-en="Crispy chicken, mozzarella, bacon, tomato, iceberg slaw, kewpie aioli" data-gr="Τραγανό κοτόπουλο, μοτσαρέλα, bacon, ντομάτα, iceberg slaw, kewpie aioli" data-tr="Çıtır tavuk, mozzarella, bacon, domates, iceberg salatası, kewpie aioli">Crispy chicken, mozzarella, bacon, tomato, iceberg slaw, kewpie aioli</div>
-        </div>
+        <div class="mitem"><div class="mitem-name">Soft Crime</div><div class="mitem-desc" data-en="Turkey, bacon, mozzarella, tomato, iceberg slaw, roasted green peppers, ZERO smash sauce" data-gr="Γαλοπούλα, bacon, μοτσαρέλα, ντομάτα, iceberg slaw, cheddar sauce, σως ZERO smash" data-tr="Hindi, bacon, mozzarella, domates, iceberg salatası, kızarmış yeşil biber, ZERO smash sos">Turkey, bacon, mozzarella, tomato, iceberg slaw, roasted green peppers, ZERO smash sauce</div></div>
+        <div class="mitem"><div class="mitem-name">Chicken Frequency ⚡</div><div class="mitem-desc" data-en="Crispy chicken, mozzarella, bacon, tomato, iceberg slaw, kewpie aioli" data-gr="Τραγανό κοτόπουλο, μοτσαρέλα, bacon, ντομάτα, iceberg slaw, kewpie aioli" data-tr="Çıtır tavuk, mozzarella, bacon, domates, iceberg salatası, kewpie aioli">Crispy chicken, mozzarella, bacon, tomato, iceberg slaw, kewpie aioli</div></div>
       </div>
       <div class="mnote" data-en="All club sandwiches served with long fries" data-gr="Όλα τα κλαμπ σάντουιτς σερβίρονται με long fries" data-tr="Tüm kulüp sandviçler uzun patates kızartması ile servis edilir">All club sandwiches served with long fries</div>
     </div>
 
-    <!-- SIDES -->
     <div class="mpanel" id="food-sides">
       <div class="mitems">
-        <div class="mitem">
-          <div class="mitem-name">Fries With Benefits</div>
-          <div class="mitem-desc" data-en="Long fries, seasoning, choice of sauce from the library" data-gr="Long fries από ζύμη πατάτας, αλάτι καρυκευμάτων, επιλογή σάλτσας από τη library" data-tr="Uzun patates kızartması, baharat, kütüphaneden sos seçimi">Long fries, seasoning, choice of sauce from the library</div>
-        </div>
-        <div class="mitem">
-          <div class="mitem-name" data-en="Extra Sauce" data-gr="Έξτρα Σάλτσα" data-tr="Extra Sauce">Extra Sauce</div>
-          <div class="mitem-desc" data-en="Any sauce from the ZERO library" data-gr="Οποιαδήποτε σάλτσα από τη βιβλιοθήκη ZERO" data-tr="ZERO kütüphanesinden herhangi bir sos">Any sauce from the ZERO library</div>
-        </div>
+        <div class="mitem"><div class="mitem-name">Fries With Benefits</div><div class="mitem-desc" data-en="Long fries, seasoning, choice of sauce from the library" data-gr="Long fries από ζύμη πατάτας, αλάτι καρυκευμάτων, επιλογή σάλτσας από τη library" data-tr="Uzun patates kızartması, baharat, kütüphaneden sos seçimi">Long fries, seasoning, choice of sauce from the library</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Extra Sauce" data-gr="Έξτρα Σάλτσα" data-tr="Extra Sos">Extra Sauce</div><div class="mitem-desc" data-en="Any sauce from the ZERO library" data-gr="Οποιαδήποτε σάλτσα από τη βιβλιοθήκη ZERO" data-tr="ZERO kütüphanesinden herhangi bir sos">Any sauce from the ZERO library</div></div>
       </div>
       <div class="sauce-box">
         <div class="sauce-box-head">
@@ -848,61 +557,32 @@ section{position:relative}
           <div class="sauce-box-sub" data-en="Choose your sauce. Make it yours." data-gr="Διάλεξε τη σάλτσα σου. Κάν' το δικό σου." data-tr="Sosunu seç. Kendine yap.">Choose your sauce. Make it yours.</div>
         </div>
         <div class="sauce-grid">
-          <div>
-            <div class="sauce-name">ZERO Smash Sauce</div>
-            <div class="sauce-desc" data-en="Mayo, pickle relish, mustard, onion, sumac" data-gr="Μαγιονέζα, pickle relish, μουστάρδα, κρεμμύδι, σουμάκ" data-tr="Mayonez, turşu reçeli, hardal, soğan, sumak">Mayo, pickle relish, mustard, onion, sumac</div>
-          </div>
-          <div>
-            <div class="sauce-name">Kewpie Aioli</div>
-            <div class="sauce-desc" data-en="Kewpie-style mayo, rice vinegar" data-gr="Μαγιονέζα τύπου kewpie, rice vinegar" data-tr="Kewpie tipi mayonez, pirinç sirkesi">Kewpie-style mayo, rice vinegar</div>
-          </div>
-          <div>
-            <div class="sauce-name">Cheddar Comeback</div>
-            <div class="sauce-desc" data-en="Cheddar sauce spices, emulsified blend" data-gr="Cheddar sauce spices, emulsified blend" data-tr="Cheddar sos baharatları, emülsifiye karışım">Cheddar sauce spices, emulsified blend</div>
-          </div>
+          <div><div class="sauce-name">ZERO Smash Sauce</div><div class="sauce-desc" data-en="Mayo, pickle relish, mustard, onion, sumac" data-gr="Μαγιονέζα, pickle relish, μουστάρδα, κρεμμύδι, σουμάκ" data-tr="Mayonez, turşu reçeli, hardal, soğan, sumak">Mayo, pickle relish, mustard, onion, sumac</div></div>
+          <div><div class="sauce-name">Kewpie Aioli</div><div class="sauce-desc" data-en="Kewpie-style mayo, rice vinegar" data-gr="Μαγιονέζα τύπου kewpie, rice vinegar" data-tr="Kewpie tipi mayonez, pirinç sirkesi">Kewpie-style mayo, rice vinegar</div></div>
+          <div><div class="sauce-name">Cheddar Comeback</div><div class="sauce-desc" data-en="Cheddar sauce spices, emulsified blend" data-gr="Cheddar sauce spices, emulsified blend" data-tr="Cheddar sos baharatları, emülsifiye karışım">Cheddar sauce spices, emulsified blend</div></div>
         </div>
       </div>
     </div>
 
-    <!-- SALADS -->
     <div class="mpanel" id="food-salads">
       <div class="mitems">
-        <div class="mitem">
-          <div class="mitem-name">Summer In Greece <span class="mveg">V</span></div>
-          <div class="mitem-desc" data-en="Tomato, cucumber, onion, olives, green pepper, feta, capers, olive oil" data-gr="Ντομάτα, αγγούρι, κρεμμύδι, ελιές, πράσινη πιπεριά, φέτα, κάπαρη, ελαιόλαδο" data-tr="Domates, salatalık, soğan, zeytin, yeşil biber, beyaz peynir, kapari, zeytinyağı">Tomato, cucumber, onion, olives, green pepper, feta, capers, olive oil</div>
-        </div>
-        <div class="mitem">
-          <div class="mitem-name">Greek Therapy <span class="mveg">V</span></div>
-          <div class="mitem-desc" data-en="Watermelon, feta, iceberg slaw, fresh mint, carob paximadi, olive oil" data-gr="Καρπούζι, φέτα, φρέσκια μέντα, χαρουποπαξιμάδι, ελαιόλαδο" data-tr="Karpuz, beyaz peynir, iceberg salatası, taze nane, keçiboynuzu peksimet, zeytinyağı">Watermelon, feta, iceberg slaw, fresh mint, carob paximadi, olive oil</div>
-        </div>
+        <div class="mitem"><div class="mitem-name">Summer In Greece <span class="mveg">V</span></div><div class="mitem-desc" data-en="Tomato, cucumber, onion, olives, green pepper, feta, capers, olive oil" data-gr="Ντομάτα, αγγούρι, κρεμμύδι, ελιές, πράσινη πιπεριά, φέτα, κάπαρη, ελαιόλαδο" data-tr="Domates, salatalık, soğan, zeytin, yeşil biber, beyaz peynir, kapari, zeytinyağı">Tomato, cucumber, onion, olives, green pepper, feta, capers, olive oil</div></div>
+        <div class="mitem"><div class="mitem-name">Greek Therapy <span class="mveg">V</span></div><div class="mitem-desc" data-en="Watermelon, feta, iceberg slaw, fresh mint, carob paximadi, olive oil" data-gr="Καρπούζι, φέτα, φρέσκια μέντα, χαρουποπαξιμάδι, ελαιόλαδο" data-tr="Karpuz, beyaz peynir, taze nane, keçiboynuzu peksimet, zeytinyağı">Watermelon, feta, iceberg slaw, fresh mint, carob paximadi, olive oil</div></div>
       </div>
     </div>
 
-    <!-- DESSERTS -->
     <div class="mpanel" id="food-desserts">
       <div class="mitems">
-        <div class="mitem">
-          <div class="mitem-name">The Dark Kiss</div>
-          <div class="mitem-desc" data-en="Sweet panuozzo dough, Nutella, banana" data-gr="Γλυκιά ζύμη panuozzo, Nutella, μπανάνα" data-tr="Tatlı panuozzo hamuru, Nutella, muz">Sweet panuozzo dough, Nutella, banana</div>
-        </div>
-        <div class="mitem">
-          <div class="mitem-name">Greek Bliss <span class="mveg">V</span></div>
-          <div class="mitem-desc" data-en="Yoghurt, honey, granola, fresh fruits" data-gr="Γιαούρτι, μέλι, granola, φρέσκα φρούτα" data-tr="Yoğurt, bal, granola, taze meyveler">Yoghurt, honey, granola, fresh fruits</div>
-        </div>
-        <div class="mitem">
-          <div class="mitem-name">Tiramisu</div>
-          <div class="mitem-desc" data-en="Classic Italian, homemade" data-gr="Κλασικό ιταλικό, σπιτικό" data-tr="Klasik İtalyan, ev yapımı">Classic Italian, homemade</div>
-        </div>
-        <div class="mitem">
-          <div class="mitem-name" data-en="Ice Cream" data-gr="Παγωτό" data-tr="Ice Cream">Ice Cream</div>
-          <div class="mitem-desc" data-en="Ask the staff for the daily prepped flavours" data-gr="Ρωτήστε το προσωπικό για τις γεύσεις" data-tr="Günlük hazırlanan tatlar için personele sorun">Ask the staff for the daily prepped flavours</div>
-        </div>
+        <div class="mitem"><div class="mitem-name">The Dark Kiss</div><div class="mitem-desc" data-en="Sweet panuozzo dough, Nutella, banana" data-gr="Γλυκιά ζύμη panuozzo, Nutella, μπανάνα" data-tr="Tatlı panuozzo hamuru, Nutella, muz">Sweet panuozzo dough, Nutella, banana</div></div>
+        <div class="mitem"><div class="mitem-name">Greek Bliss <span class="mveg">V</span></div><div class="mitem-desc" data-en="Yoghurt, honey, granola, fresh fruits" data-gr="Γιαούρτι, μέλι, granola, φρέσκα φρούτα" data-tr="Yoğurt, bal, granola, taze meyveler">Yoghurt, honey, granola, fresh fruits</div></div>
+        <div class="mitem"><div class="mitem-name">Tiramisu</div><div class="mitem-desc" data-en="Classic Italian, homemade" data-gr="Κλασικό ιταλικό, σπιτικό" data-tr="Klasik İtalyan, ev yapımı">Classic Italian, homemade</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Ice Cream" data-gr="Παγωτό" data-tr="Dondurma">Ice Cream</div><div class="mitem-desc" data-en="Ask the staff for the daily prepped flavours" data-gr="Ρωτήστε το προσωπικό για τις γεύσεις" data-tr="Günlük hazırlanan tatlar için personele sorun">Ask the staff for the daily prepped flavours</div></div>
       </div>
     </div>
-
   </div>
 </section>
 
+<!-- DRINKS -->
 <section class="drinks" id="drinks">
   <div class="wrap">
     <div class="label reveal" data-en="Drinks" data-gr="Ποτά" data-tr="İçecekler">Drinks</div>
@@ -912,51 +592,46 @@ section{position:relative}
     </h2>
     <p class="lead reveal" data-en="From morning freddo to lazy afternoon cocktails, the drink list is built around heat, salt, music and soft summer light." data-gr="Από το πρωινό freddo μέχρι τα απογευματινά cocktails, η λίστα ποτών χτίστηκε γύρω από ζέστη, αλάτι, μουσική και απαλό καλοκαιρινό φως." data-tr="Sabah freddo'sundan öğleden sonra kokteyllerine kadar, içecek listesi sıcaklık, tuz, müzik ve yumuşak yaz ışığı üzerine kurulmuştur.">From morning freddo to lazy afternoon cocktails, the drink list is built around heat, salt, music and soft summer light.</p>
 
-    <!-- DRINKS TABS -->
-    <div class="menu-tabs reveal" style="margin-top:48px">
+    <div class="menu-tabs reveal" style="margin-top:44px">
       <button class="mtab on" onclick="mswitch('drink','coffee',this)" data-en="Coffee" data-gr="Καφές" data-tr="Kahve">Coffee</button>
-      <button class="mtab"    onclick="mswitch('drink','cold',this)" data-en="Cold Drinks" data-gr="Κρύα Ροφήματα" data-tr="Soğuk İçecekler">Cold Drinks</button>
-      <button class="mtab"    onclick="mswitch('drink','juices',this)" data-en="Juices" data-gr="Χυμοί" data-tr="Meyve Suları">Juices</button>
-      <button class="mtab"    onclick="mswitch('drink','beers',this)" data-en="Beers" data-gr="Μπίρες" data-tr="Biralar">Beers</button>
-      <button class="mtab"    onclick="mswitch('drink','classics',this)" data-en="Classics" data-gr="Κλασικά" data-tr="Klasikler">Classics</button>
-      <button class="mtab"    onclick="mswitch('drink','signatures',this)" data-en="Signature Transmissions" data-gr="Signature Μεταδόσεις" data-tr="İmza Kokteylleri">Signature Transmissions</button>
+      <button class="mtab" onclick="mswitch('drink','cold',this)" data-en="Cold Drinks" data-gr="Κρύα Ροφήματα" data-tr="Soğuk İçecekler">Cold Drinks</button>
+      <button class="mtab" onclick="mswitch('drink','juices',this)" data-en="Juices" data-gr="Χυμοί" data-tr="Meyve Suları">Juices</button>
+      <button class="mtab" onclick="mswitch('drink','beers',this)" data-en="Beers" data-gr="Μπίρες" data-tr="Biralar">Beers</button>
+      <button class="mtab" onclick="mswitch('drink','classics',this)" data-en="Classics" data-gr="Κλασικά" data-tr="Klasikler">Classics</button>
+      <button class="mtab" onclick="mswitch('drink','signatures',this)" data-en="Signature Transmissions" data-gr="Signature Μεταδόσεις" data-tr="İmza Kokteylleri">Signature Transmissions</button>
     </div>
 
-    <!-- COFFEE -->
     <div class="mpanel on" id="drink-coffee">
       <div class="mitems">
         <div class="mitem"><div class="mitem-name">Cappuccino</div><div class="mitem-desc" data-en="Single / Double" data-gr="Μονό / Διπλό" data-tr="Tek / Çift">Single / Double</div></div>
         <div class="mitem"><div class="mitem-name">Freddo Espresso</div><div class="mitem-desc" data-en="Iced double espresso, Greek beach classic" data-gr="Παγωμένο διπλό espresso, κλασικό της ελληνικής παραλίας" data-tr="Buzlu çift espresso, Yunan plaj klasiği">Iced double espresso, Greek beach classic</div></div>
         <div class="mitem"><div class="mitem-name">Freddo Cappuccino</div><div class="mitem-desc" data-en="Iced cappuccino with cold foam" data-gr="Παγωμένο cappuccino με κρύο αφρό" data-tr="Buzlu cappuccino, soğuk köpük ile">Iced cappuccino with cold foam</div></div>
         <div class="mitem"><div class="mitem-name">Φραπέ</div><div class="mitem-desc" data-en="Greek iced coffee, shaken to perfection" data-gr="Ελληνικός παγωμένος καφές, χτυπητός τέλεια" data-tr="Yunan buzlu kahvesi, mükemmel şekilde çırpılmış">Greek iced coffee, shaken to perfection</div></div>
-        <div class="mitem"><div class="mitem-name" data-en="Chocolate" data-gr="Σοκολάτα" data-tr="Chocolate">Chocolate</div><div class="mitem-desc" data-en="Hot or cold, rich blend" data-gr="Ζεστή ή κρύα, πλούσιο μείγμα" data-tr="Sıcak veya soğuk, zengin karışım">Hot or cold, rich blend</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Chocolate" data-gr="Σοκολάτα" data-tr="Çikolata">Chocolate</div><div class="mitem-desc" data-en="Hot or cold, rich blend" data-gr="Ζεστή ή κρύα, πλούσιο μείγμα" data-tr="Sıcak veya soğuk, zengin karışım">Hot or cold, rich blend</div></div>
         <div class="mitem"><div class="mitem-name">Espresso</div><div class="mitem-desc" data-en="Single / Double" data-gr="Μονό / Διπλό" data-tr="Tek / Çift">Single / Double</div></div>
-        <div class="mitem"><div class="mitem-name" data-en="Greek Coffee" data-gr="Ελληνικός Καφές" data-tr="Greek Coffee">Greek Coffee</div><div class="mitem-desc" data-en="Single / Double, traditional preparation" data-gr="Μονός / Διπλός, παραδοσιακή παρασκευή" data-tr="Tek / Çift, geleneksel hazırlama">Single / Double, traditional preparation</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Greek Coffee" data-gr="Ελληνικός Καφές" data-tr="Yunan Kahvesi">Greek Coffee</div><div class="mitem-desc" data-en="Single / Double, traditional preparation" data-gr="Μονός / Διπλός, παραδοσιακή παρασκευή" data-tr="Tek / Çift, geleneksel hazırlama">Single / Double, traditional preparation</div></div>
       </div>
     </div>
 
-    <!-- COLD DRINKS -->
     <div class="mpanel" id="drink-cold">
       <div class="mitems">
         <div class="mitem"><div class="mitem-name" data-en="Milkshake" data-gr="Μιλκσέικ" data-tr="Milkshake">Milkshake</div><div class="mitem-desc" data-en="Chocolate / Vanilla / Strawberry" data-gr="Σοκολάτα / Βανίλια / Φράουλα" data-tr="Çikolata / Vanilyalı / Çilekli">Chocolate / Vanilla / Strawberry</div></div>
-        <div class="mitem"><div class="mitem-name" data-en="Soft Drinks" data-gr="Αναψυκτικά" data-tr="Soft Drinks">Soft Drinks</div><div class="mitem-desc" data-en="Assorted sodas &amp; classics" data-gr="Διάφορα αναψυκτικά &amp; κλασικά" data-tr="Çeşitli sodalar &amp; klasikler">Assorted sodas &amp; classics</div></div>
-        <div class="mitem"><div class="mitem-name" data-en="Lemonade" data-gr="Λεμονάδα" data-tr="Lemonade">Lemonade</div><div class="mitem-desc" data-en="Gia..giamas — Classic or Peach" data-gr="Gia..giamas — Κλασική ή Ροδάκινο" data-tr="Gia..giamas — Klasik veya Şeftali">Gia..giamas — Classic or Peach</div></div>
-        <div class="mitem"><div class="mitem-name" data-en="Iced Tea" data-gr="Τσάι" data-tr="Iced Tea">Iced Tea</div><div class="mitem-desc" data-en="Lemon / Peach / Strawberry Hibiscus" data-gr="Λεμόνι / Ροδάκινο / Φράουλα Ιβίσκος" data-tr="Limon / Şeftali / Çilek Hibiskus">Lemon / Peach / Strawberry Hibiscus</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Soft Drinks" data-gr="Αναψυκτικά" data-tr="Meşrubat">Soft Drinks</div><div class="mitem-desc" data-en="Assorted sodas &amp; classics" data-gr="Διάφορα αναψυκτικά &amp; κλασικά" data-tr="Çeşitli sodalar &amp; klasikler">Assorted sodas &amp; classics</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Lemonade" data-gr="Λεμονάδα" data-tr="Limonata">Lemonade</div><div class="mitem-desc" data-en="Gia..giamas — Classic or Peach" data-gr="Gia..giamas — Κλασική ή Ροδάκινο" data-tr="Gia..giamas — Klasik veya Şeftali">Gia..giamas — Classic or Peach</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Iced Tea" data-gr="Τσάι" data-tr="Buzlu Çay">Iced Tea</div><div class="mitem-desc" data-en="Lemon / Peach / Strawberry Hibiscus" data-gr="Λεμόνι / Ροδάκινο / Φράουλα Ιβίσκος" data-tr="Limon / Şeftali / Çilek Hibiskus">Lemon / Peach / Strawberry Hibiscus</div></div>
         <div class="mitem"><div class="mitem-name">Red Bull</div><div class="mitem-desc" data-en="Original energy drink" data-gr="Αρχικό ενεργειακό ποτό" data-tr="Orijinal enerji içeceği">Original energy drink</div></div>
-        <div class="mitem"><div class="mitem-name" data-en="Water" data-gr="Νερό" data-tr="Water">Water</div><div class="mitem-desc" data-en="500ml / 1000ml" data-gr="500ml / 1000ml" data-tr="500ml / 1000ml">500ml / 1000ml</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Water" data-gr="Νερό" data-tr="Su">Water</div><div class="mitem-desc" data-en="500ml / 1000ml" data-gr="500ml / 1000ml" data-tr="500ml / 1000ml">500ml / 1000ml</div></div>
       </div>
     </div>
 
-    <!-- JUICES -->
     <div class="mpanel" id="drink-juices">
       <div class="mitems">
-        <div class="mitem"><div class="mitem-name" data-en="Fresh Orange Juice" data-gr="Φυσικός Χυμός Πορτοκάλι" data-tr="Fresh Orange Juice">Fresh Orange Juice</div><div class="mitem-desc" data-en="Squeezed to order" data-gr="Στυμμένος στη στιγμή" data-tr="Sipariş üzerine sıkılır">Squeezed to order</div></div>
-        <div class="mitem"><div class="mitem-name" data-en="Juice" data-gr="Χυμός" data-tr="Juice">Juice</div><div class="mitem-desc" data-en="Assorted bottled juices" data-gr="Διάφοροι χυμοί σε μπουκάλι" data-tr="Çeşitli şişe meyve suları">Assorted bottled juices</div></div>
-        <div class="mitem"><div class="mitem-name" data-en="Slushy" data-gr="Γρανίτα" data-tr="Slushy">Slushy</div><div class="mitem-desc" data-en="Frozen fruit slush — ask for today's flavour" data-gr="Παγωμένη γρανίτα φρούτων — ρωτήστε για τη γεύση της ημέρας" data-tr="Dondurulmuş meyve granita — günün tadı için sorun">Frozen fruit slush — ask for today's flavour</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Fresh Orange Juice" data-gr="Φυσικός Χυμός Πορτοκάλι" data-tr="Taze Portakal Suyu">Fresh Orange Juice</div><div class="mitem-desc" data-en="Squeezed to order" data-gr="Στυμμένος στη στιγμή" data-tr="Sipariş üzerine sıkılır">Squeezed to order</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Juice" data-gr="Χυμός" data-tr="Meyve Suyu">Juice</div><div class="mitem-desc" data-en="Assorted bottled juices" data-gr="Διάφοροι χυμοί σε μπουκάλι" data-tr="Çeşitli şişe meyve suları">Assorted bottled juices</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Slushy" data-gr="Γρανίτα" data-tr="Granita">Slushy</div><div class="mitem-desc" data-en="Frozen fruit slush — ask for today's flavour" data-gr="Παγωμένη γρανίτα φρούτων — ρωτήστε για τη γεύση της ημέρας" data-tr="Dondurulmuş meyve granita — günün tadı için sorun">Frozen fruit slush — ask for today's flavour</div></div>
       </div>
     </div>
 
-    <!-- BEERS -->
     <div class="mpanel" id="drink-beers">
       <div class="mitems">
         <div class="mitem"><div class="mitem-name">Alfa</div><div class="mitem-desc" data-en="Greek lager, cold bottle" data-gr="Ελληνική lager, παγωμένο μπουκάλι" data-tr="Yunan lageri, soğuk şişe">Greek lager, cold bottle</div></div>
@@ -969,7 +644,6 @@ section{position:relative}
       </div>
     </div>
 
-    <!-- CLASSICS -->
     <div class="mpanel" id="drink-classics">
       <div class="mitems">
         <div class="mitem"><div class="mitem-name">Margarita</div><div class="mitem-desc" data-en="Tequila, triple sec, fresh lime, salt rim" data-gr="Tequila, triple sec, φρέσκο λάιμ, αλάτι στο χείλος" data-tr="Tekila, triple sec, taze misket limonu, tuz kenarı">Tequila, triple sec, fresh lime, salt rim</div></div>
@@ -985,7 +659,6 @@ section{position:relative}
       </div>
     </div>
 
-    <!-- SIGNATURE TRANSMISSIONS -->
     <div class="mpanel" id="drink-signatures">
       <div class="mitems">
         <div class="mitem"><div class="mitem-name">Delulu Wave <span class="mbadge">Original</span></div><div class="mitem-desc" data-en="Gin, fresh lime juice, passion fruit, orgeat, Falernum" data-gr="Τζιν, φρέσκος χυμός λάιμ, passion fruit, orgeat, Falernum" data-tr="Cin, taze misket limonu suyu, passion fruit, orgeat, Falernum">Gin, fresh lime juice, passion fruit, orgeat, Falernum</div></div>
@@ -1001,34 +674,43 @@ section{position:relative}
         <div class="sig-note-sub" data-en="Sunset Fuel · Island Frequency · Cold Drinks" data-gr="Καύσιμο Ηλιοβασιλέματος · Συχνότητα Νησιού · Κρύα Ποτά" data-tr="Gün Batımı Yakıtı · Ada Frekansı · Soğuk İçecekler">Sunset Fuel · Island Frequency · Cold Drinks</div>
       </div>
     </div>
-
   </div>
 </section>
 
+<!-- FIND US -->
 <section class="visit" id="visit">
-  <div class="wrap two">
+  <div class="wrap two visit-two">
     <div class="reveal">
-      <div class="label">Find Us</div>
-      <h2 class="title">see you<br><span class="italic">@ Mykalis 0</span></h2>
+      <div class="label" data-en="Find Us" data-gr="Βρείτε Μας" data-tr="Bizi Bulun">Find Us</div>
+      <h2 class="title">
+        <span data-en="see you" data-gr="τα λέμε" data-tr="görüşürüz">see you</span><br>
+        <span class="italic" data-en="@ Mykalis 0" data-gr="@ Μυκάλης 0" data-tr="@ Mykalis 0">@ Mykalis 0</span>
+      </h2>
       <div class="visit-list">
-        <div class="visit-block"><small>Address</small><p>Mykali Beach, Samos Island</p><span>At the end of the road. Literally.</span></div>
-        <div class="visit-block"><small>Hours</small><p>10:00 — late afternoon</p><span>Open daily · Summer season</span></div>
-        <div class="visit-block"><small>Instagram</small><p>@zero.beach.canteen</p><span>Tag your escape. We post what's left on the grill, what's in the glass, and when the sunset is worth staying for.</span></div>
+        <div class="visit-block">
+          <small data-en="Address" data-gr="Διεύθυνση" data-tr="Adres">Address</small>
+          <p data-en="Mykali Beach, Samos Island" data-gr="Παραλία Μυκάλης, Σάμος" data-tr="Mykali Sahili, Sisam Adası">Mykali Beach, Samos Island</p>
+          <span data-en="At the end of the road. Literally." data-gr="Στην άκρη του δρόμου. Κυριολεκτικά." data-tr="Yolun sonunda. Gerçekten.">At the end of the road. Literally.</span>
+        </div>
+        <div class="visit-block">
+          <small data-en="Hours" data-gr="Ώρες" data-tr="Saatler">Hours</small>
+          <p data-en="10:00 — late afternoon" data-gr="10:00 — αργό απόγευμα" data-tr="10:00 — geç öğleden sonra">10:00 — late afternoon</p>
+          <span data-en="Open daily · Summer season" data-gr="Ανοιχτά καθημερινά · Καλοκαιρινή σεζόν" data-tr="Her gün açık · Yaz sezonu">Open daily · Summer season</span>
+        </div>
+        <div class="visit-block">
+          <small data-en="Instagram" data-gr="Instagram" data-tr="Instagram">Instagram</small>
+          <p>@zero.beach.canteen</p>
+          <span data-en="Tag your escape. We post what's left on the grill, what's in the glass, and when the sunset is worth staying for." data-gr="Φωτογράφισε τη φυγή σου. Ποστάρουμε τι έμεινε στη σχάρα, τι είναι στο ποτήρι και πότε το ηλιοβασίλεμα αξίζει να μείνεις." data-tr="Kaçışını etiketle. Mangalda kalanı, bardakta ne olduğunu ve gün batımının beklenmeye değer olduğunu paylaşıyoruz.">Tag your escape. We post what's left on the grill, what's in the glass, and when the sunset is worth staying for.</span>
+        </div>
       </div>
-
-      <!-- QR CODE -->
-      <div style="margin-top:38px;display:flex;align-items:center;gap:22px;border-top:1px solid rgba(79,52,35,.14);padding-top:30px;">
-        <a href="https://www.google.com/maps?q=37.683,26.766" target="_blank" rel="noopener" style="flex-shrink:0;">
-          <img src="maps-qr.png" alt="Scan to open in Google Maps"
-               style="width:110px;height:110px;border-radius:12px;border:1px solid rgba(79,52,35,.14);display:block;">
+      <div class="qr-block">
+        <a href="https://www.google.com/maps?q=37.683,26.766" target="_blank" rel="noopener">
+          <img src="maps-qr.png" alt="Scan to open in Google Maps">
         </a>
         <div>
-          <div style="font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--terracotta);margin-bottom:6px;">Find Us on Maps</div>
-          <p style="font-size:14px;line-height:1.7;color:var(--muted);">Scan the QR code to open<br>our exact location in Google Maps.</p>
-          <a href="https://www.google.com/maps?q=37.683,26.766" target="_blank" rel="noopener"
-             style="display:inline-block;margin-top:10px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--terracotta);">
-            Or tap here →
-          </a>
+          <div class="qr-text-label" data-en="Find Us on Maps" data-gr="Βρείτε Μας στους Χάρτες" data-tr="Haritada Bizi Bulun">Find Us on Maps</div>
+          <p class="qr-text-desc" data-en="Scan the QR code to open our exact location in Google Maps." data-gr="Σκανάρε το QR code για να ανοίξεις την ακριβή τοποθεσία μας στο Google Maps." data-tr="Google Haritalar'da tam konumumuzu açmak için QR kodunu tarayın.">Scan the QR code to open our exact location in Google Maps.</p>
+          <a class="qr-tap" href="https://www.google.com/maps?q=37.683,26.766" target="_blank" rel="noopener" data-en="Or tap here →" data-gr="Ή πάτα εδώ →" data-tr="Ya da buraya dokun →">Or tap here →</a>
         </div>
       </div>
     </div>
@@ -1041,43 +723,63 @@ section{position:relative}
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer class="footer">
   <img src="zero_site_assets/zero-logo-transparent.png" alt="ZERO logo">
   <h2>ZERO</h2>
-  <p>Beach Canteen · Mykali Beach · Samos · Off The Map</p>
-  <p style="margin-top:18px;font-size:13px;font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:.06em;color:rgba(255,250,241,.45);">Come for the food. Stay because your story looks better here.</p>
-  <p style="margin-top:12px;"><a href="https://instagram.com/zero.beach.canteen" target="_blank" style="color:var(--peach);letter-spacing:.2em;">@zero.beach.canteen</a></p>
+  <p class="footer-sub" data-en="Beach Canteen · Mykali Beach · Samos · Off The Map" data-gr="Beach Canteen · Παραλία Μυκάλης · Σάμος · Εκτός Χάρτη" data-tr="Beach Canteen · Mykali Sahili · Sisam · Haritanın Dışında">Beach Canteen · Mykali Beach · Samos · Off The Map</p>
+  <p class="footer-tagline" data-en="Come for the food. Stay because your story looks better here." data-gr="Έλα για το φαγητό. Μείνε γιατί η ιστορία σου φαίνεται καλύτερη εδώ." data-tr="Yemek için gel. Hikayen burada daha iyi göründüğü için kal.">Come for the food. Stay because your story looks better here.</p>
+  <a class="footer-ig" href="https://instagram.com/zero.beach.canteen" target="_blank">@zero.beach.canteen</a>
 </footer>
 
 <script>
-/* ── scroll reveal ── */
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) e.target.classList.add('visible');
-  });
-}, { threshold: .12 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+/* ── Scroll reveal ── */
+const ro = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
-/* ── tab switcher ── */
-function mswitch(group, id, btn) {
-  const section = document.getElementById(group === 'food' ? 'menu' : 'drinks');
-  section.querySelectorAll('.mpanel').forEach(p => p.classList.remove('on'));
-  section.querySelectorAll('.mtab').forEach(b => b.classList.remove('on'));
-  document.getElementById(group + '-' + id).classList.add('on');
+/* ── Tab switcher ── */
+function mswitch(group,id,btn){
+  const sec=document.getElementById(group==='food'?'menu':'drinks');
+  sec.querySelectorAll('.mpanel').forEach(p=>p.classList.remove('on'));
+  sec.querySelectorAll('.mtab').forEach(b=>b.classList.remove('on'));
+  document.getElementById(group+'-'+id).classList.add('on');
   btn.classList.add('on');
 }
 
-/* ── language switcher ── */
-let currentLang = 'en';
+/* ── Mobile nav ── */
+function toggleMobileNav(){
+  const nav=document.getElementById('mobile-nav');
+  const btn=document.getElementById('hamburger');
+  const open=nav.classList.toggle('open');
+  btn.classList.toggle('open',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeMobileNav(){
+  document.getElementById('mobile-nav').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+  document.body.style.overflow='';
+}
 
-function setLang(lang) {
-  currentLang = lang;
-  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-  document.getElementById('btn-gr').classList.toggle('active', lang === 'gr');
-  document.getElementById('btn-tr').classList.toggle('active', lang === 'tr');
-  document.querySelectorAll('[data-en]').forEach(el => {
-    const val = el.getAttribute('data-' + lang) || el.getAttribute('data-en');
-    el.innerHTML = val;
+/* ── Language switcher ── */
+let currentLang='en';
+function setLang(lang){
+  currentLang=lang;
+  /* desktop buttons */
+  ['en','gr','tr'].forEach(l=>{
+    const b=document.getElementById('btn-'+l);
+    if(b)b.classList.toggle('active',l===lang);
+  });
+  /* mobile buttons */
+  ['en','gr','tr'].forEach(l=>{
+    const b=document.getElementById('mbtn-'+l);
+    if(b)b.classList.toggle('active',l===lang);
+  });
+  /* swap all translatable text */
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const val=el.getAttribute('data-'+lang)||el.getAttribute('data-en');
+    el.innerHTML=val;
   });
 }
 </script>
