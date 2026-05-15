@@ -63,6 +63,20 @@ a{text-decoration:none;color:inherit}
 .nav a{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(43,35,29,.72);transition:.25s}
 .nav a:hover{color:var(--terracotta)}
 .nav-cta{border:1px solid rgba(79,52,35,.25);border-radius:999px;padding:12px 17px;background:rgba(255,250,241,.42)}
+.lang-toggle{
+  display:flex;align-items:center;
+  border:1px solid rgba(79,52,35,.25);border-radius:999px;
+  overflow:hidden;background:rgba(255,250,241,.42);
+  flex-shrink:0;
+}
+.lang-btn{
+  font-size:10px;font-weight:700;letter-spacing:.18em;
+  padding:8px 13px;cursor:pointer;border:none;background:transparent;
+  color:rgba(43,35,29,.52);transition:.2s;font-family:Manrope,system-ui,sans-serif;
+  text-transform:uppercase;
+}
+.lang-btn.active{background:var(--ink);color:var(--ivory)}
+.lang-btn:hover:not(.active){color:var(--terracotta)}
 .hero{
   min-height:100svh;
   position:relative;
@@ -434,6 +448,10 @@ section{position:relative}
     <li><a href="#visit">Find Us</a></li>
     <li><a class="nav-cta" href="#menu">View Menu</a></li>
   </ul>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" id="btn-gr" onclick="setLang('gr')">ΕΛ</button>
+  </div>
 </nav>
 
 <header class="hero" id="top">
@@ -488,73 +506,368 @@ section{position:relative}
   </div>
 </section>
 
+<style>
+/* ── FULL MENU STYLES ── */
+.menu-tabs{
+  display:flex;flex-wrap:wrap;gap:8px;
+  margin-bottom:40px;
+  padding-bottom:24px;
+  border-bottom:1px solid rgba(79,52,35,.14);
+}
+.mtab{
+  font-family:Manrope,system-ui,sans-serif;
+  font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  padding:11px 20px;border-radius:999px;cursor:pointer;
+  border:1px solid rgba(79,52,35,.22);
+  background:rgba(255,250,241,.56);
+  color:var(--muted);
+  transition:.22s ease;
+}
+.mtab:hover{color:var(--terracotta);border-color:var(--terracotta)}
+.mtab.on{background:var(--ink);color:var(--ivory);border-color:var(--ink)}
+.mpanel{display:none}
+.mpanel.on{display:block;animation:mfade .28s ease}
+@keyframes mfade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.mcat{
+  display:flex;align-items:center;gap:16px;
+  margin:36px 0 20px;
+}
+.mcat:first-child{margin-top:0}
+.mcat-title{
+  font-size:10px;font-weight:700;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--terracotta);white-space:nowrap;
+}
+.mcat-line{flex:1;height:1px;background:rgba(79,52,35,.14)}
+.mitems{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:1px;
+  background:rgba(79,52,35,.10);
+  border:1px solid rgba(79,52,35,.10);
+  margin-bottom:8px;
+}
+.mitem{
+  background:rgba(255,250,241,.88);
+  padding:22px 24px;
+  transition:.2s;
+}
+.mitem:hover{background:rgba(255,250,241,1)}
+.mitem-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:400;
+  color:var(--wood);margin-bottom:6px;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.mbadge{
+  font-family:Manrope,system-ui,sans-serif;
+  font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  background:var(--terracotta);color:var(--ivory);
+  padding:3px 8px;border-radius:4px;
+}
+.mveg{
+  font-family:Manrope,system-ui,sans-serif;
+  font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:#6a8c5a;border:1px solid #6a8c5a;
+  padding:2px 7px;border-radius:4px;
+}
+.mitem-desc{font-size:13px;line-height:1.75;color:var(--muted)}
+.mnote{
+  background:var(--sea);color:var(--ivory);
+  padding:14px 24px;font-size:10px;font-weight:600;
+  letter-spacing:.22em;text-transform:uppercase;text-align:center;
+  border-radius:10px;margin:16px 0 4px;
+}
+.sauce-box{
+  border:1px solid rgba(79,52,35,.14);
+  border-radius:22px;
+  background:rgba(255,250,241,.6);
+  padding:30px 32px;
+  margin:24px 0;
+}
+.sauce-box-head{text-align:center;margin-bottom:22px}
+.sauce-box-title{
+  font-size:10px;font-weight:700;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--terracotta);margin-bottom:6px;
+}
+.sauce-box-sub{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:19px;color:var(--muted);
+}
+.sauce-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px 30px;
+}
+.sauce-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;color:var(--wood);margin-bottom:4px;
+}
+.sauce-desc{font-size:13px;line-height:1.7;color:var(--muted)}
+.sig-note{
+  text-align:center;margin-top:32px;
+  padding:28px 24px;
+  border:1px solid rgba(79,52,35,.14);
+  border-radius:22px;
+  background:rgba(255,250,241,.6);
+}
+.sig-note-eye{font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--terracotta);margin-bottom:6px}
+.sig-note-main{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:32px;color:var(--wood)}
+.sig-note-sub{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+@media(max-width:700px){
+  .sauce-grid{grid-template-columns:1fr}
+  .mitems{grid-template-columns:1fr}
+}
+</style>
+
 <section class="menu" id="menu">
   <div class="wrap">
     <div class="menu-head">
       <div>
-        <div class="label reveal">Food</div>
-        <h2 class="title reveal">made here.<br><span class="italic">fired here.</span></h2>
+        <div class="label reveal" data-en="Food" data-gr="Φαγητό">Food</div>
+        <h2 class="title reveal">
+          <span data-en="made here." data-gr="φτιάχνεται εδώ.">made here.</span><br>
+          <span class="italic" data-en="fired here." data-gr="ψήνεται εδώ.">fired here.</span>
+        </h2>
       </div>
-      <p class="lead reveal">A small menu with beach-bar speed and chef-level thinking. Comfort food, but with identity. These are temporary example images so we can now see the website rhythm clearly.</p>
+      <p class="lead reveal" data-en="A small menu with beach-bar speed and chef-level thinking. Comfort food, but with identity. Everything made in-house, fired to order." data-gr="Ένα μικρό μενού με ταχύτητα beach bar και σκέψη σεφ. Φαγητό για άνεση, αλλά με ταυτότητα. Όλα φτιαγμένα στη στιγμή, ψημένα κατά παραγγελία.">A small menu with beach-bar speed and chef-level thinking. Comfort food, but with identity. Everything made in-house, fired to order.</p>
     </div>
 
-    <div class="feature-grid reveal">
-      <article class="feature-card">
-        <div class="feature-img"><img src="zero_site_assets/panuozzo-example.jpg" alt="Panuozzo example"></div>
-        <div class="feature-body">
-          <div class="feature-row"><div class="feature-name">Holy Bird</div><div class="price">8.5</div></div>
-          <p class="desc">Fried chicken, mozzarella, iceberg slaw, bacon, ZERO smash sauce, pickle.</p>
-        </div>
-      </article>
-      <article class="feature-card">
-        <div class="feature-img"><img src="zero_site_assets/smash-burger-example.jpg" alt="Smash burger example"></div>
-        <div class="feature-body">
-          <div class="feature-row"><div class="feature-name">Smash Me Baby</div><div class="price">9.0</div></div>
-          <p class="desc">Double smash beef, bacon, cheddar sauce, crispy onions, pickle, long fries.</p>
-        </div>
-      </article>
-      <article class="feature-card">
-        <div class="feature-img"><img src="zero_site_assets/panuozzo-example.jpg" alt="Bosphorus panuozzo example"></div>
-        <div class="feature-body">
-          <div class="feature-row"><div class="feature-name">The Bosphorus</div><div class="price">8.5</div></div>
-          <p class="desc">Döner, yoghurt sauce, tomato, onion, cucumber, sumac, feta, iceberg slaw.</p>
-        </div>
-      </article>
+    <!-- FOOD TABS -->
+    <div class="menu-tabs reveal">
+      <button class="mtab on"  onclick="mswitch('food','sandwiches',this)" data-en="Sandwiches &amp; Panuozzo" data-gr="Σάντουιτς &amp; Panuozzo">Sandwiches &amp; Panuozzo</button>
+      <button class="mtab"     onclick="mswitch('food','burgers',this)" data-en="Burgers" data-gr="Μπέργκερ">Burgers</button>
+      <button class="mtab"     onclick="mswitch('food','clubs',this)" data-en="Club Sandwiches" data-gr="Κλαμπ Σάντουιτς">Club Sandwiches</button>
+      <button class="mtab"     onclick="mswitch('food','sides',this)" data-en="Sides" data-gr="Συνοδευτικά">Sides</button>
+      <button class="mtab"     onclick="mswitch('food','salads',this)" data-en="Salads" data-gr="Σαλάτες">Salads</button>
+      <button class="mtab"     onclick="mswitch('food','desserts',this)" data-en="Desserts" data-gr="Επιδόρπια">Desserts</button>
     </div>
+
+    <!-- SANDWICHES & PANUOZZO -->
+    <div class="mpanel on" id="food-sandwiches">
+      <div class="mitems">
+        <div class="mitem">
+          <div class="mitem-name">Holy Bird 🔥</div>
+          <div class="mitem-desc" data-en="Fried chicken, mozzarella, iceberg slaw, bacon, charred green peppers, ZERO smash sauce, pickle" data-gr="Τηγανητό κοτόπουλο, μοτσαρέλα, iceberg slaw, bacon, ψητά λαχανικά, σως ZERO smash, πίκλα">Fried chicken, mozzarella, iceberg slaw, bacon, charred green peppers, ZERO smash sauce, pickle</div>
+        </div>
+        <div class="mitem">
+          <div class="mitem-name">The Undertaker</div>
+          <div class="mitem-desc" data-en="Frankfurt, cheddar sauce, cabbage &amp; carrot slaw, crispy onions, pickle, ZERO smash sauce" data-gr="Λουκάνικο φρανκφούρτης, cheddar sauce, coleslaw λάχανο &amp; καρότο, crispy onions, πίκλα, σως ZERO smash">Frankfurt, cheddar sauce, cabbage &amp; carrot slaw, crispy onions, pickle, ZERO smash sauce</div>
+        </div>
+        <div class="mitem">
+          <div class="mitem-name">The Bosphorus</div>
+          <div class="mitem-desc" data-en="Döner, yoghurt sauce, tomato, onion, cucumber, sumac, feta, iceberg slaw" data-gr="Ντονέρ, σως γιαουρτιού, ντομάτα, κρεμμύδι, αγγούρι, σουμάκ, φέτα, iceberg slaw">Döner, yoghurt sauce, tomato, onion, cucumber, sumac, feta, iceberg slaw</div>
+        </div>
+        <div class="mitem">
+          <div class="mitem-name">Smooth Operator <span class="mveg">V</span></div>
+          <div class="mitem-desc" data-en="Feta, tomato, cucumber, onion, olives, yogurt spread, charred green peppers, olive oil" data-gr="Φέτα, ντομάτα, αγγούρι, κρεμμύδι, ελιές, άλειμμα γιαουρτιού, ψητά λαχανικά, ελαιόλαδο">Feta, tomato, cucumber, onion, olives, yogurt spread, charred green peppers, olive oil</div>
+        </div>
+        <div class="mitem">
+          <div class="mitem-name">The Greek Affair <span class="mveg">V</span></div>
+          <div class="mitem-desc" data-en="Feta, tomato, cucumber, onion, olives, pickle, yoghurt spread, olive oil" data-gr="Φέτα, ντομάτα, αγγούρι, κρεμμύδι, ελιές, πίκλα, άλειμμα γιαουρτιού, ελαιόλαδο">Feta, tomato, cucumber, onion, olives, pickle, yoghurt spread, olive oil</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BURGERS -->
+    <div class="mpanel" id="food-burgers">
+      <div class="mitems">
+        <div class="mitem">
+          <div class="mitem-name">Smash Me Baby <span class="mbadge" data-en="Signature" data-gr="Signature">Signature</span></div>
+          <div class="mitem-desc" data-en="Double smash beef, bacon, iceberg slaw, tomato, crispy onions, cheddar sauce, pickle, ZERO smash sauce" data-gr="Διπλό smash μοσχάρι, bacon, iceberg slaw, ντομάτα, crispy onions, cheddar sauce, πίκλα, σως ZERO smash">Double smash beef, bacon, iceberg slaw, tomato, crispy onions, cheddar sauce, pickle, ZERO smash sauce</div>
+        </div>
+        <div class="mitem">
+          <div class="mitem-name">Golden Crunch</div>
+          <div class="mitem-desc" data-en="Crispy chicken, cheddar sauce, cabbage &amp; carrot slaw, tomato, crispy onions, pickle, kewpie aioli" data-gr="Τραγανό κοτόπουλο, cheddar sauce, coleslaw λάχανο &amp; καρότο, ντομάτα, crispy onions, πίκλα, kewpie aioli">Crispy chicken, cheddar sauce, cabbage &amp; carrot slaw, tomato, crispy onions, pickle, kewpie aioli</div>
+        </div>
+      </div>
+      <div class="mnote" data-en="All burgers served with long fries" data-gr="Όλα τα μπέργκερ σερβίρονται με long fries">All burgers served with long fries</div>
+    </div>
+
+    <!-- CLUB SANDWICHES -->
+    <div class="mpanel" id="food-clubs">
+      <div class="mitems">
+        <div class="mitem">
+          <div class="mitem-name">Soft Crime</div>
+          <div class="mitem-desc" data-en="Turkey, bacon, mozzarella, tomato, iceberg slaw, roasted green peppers, ZERO smash sauce" data-gr="Γαλοπούλα, bacon, μοτσαρέλα, ντομάτα, iceberg slaw, cheddar sauce, σως ZERO smash">Turkey, bacon, mozzarella, tomato, iceberg slaw, roasted green peppers, ZERO smash sauce</div>
+        </div>
+        <div class="mitem">
+          <div class="mitem-name">Chicken Frequency ⚡</div>
+          <div class="mitem-desc" data-en="Crispy chicken, mozzarella, bacon, tomato, iceberg slaw, kewpie aioli" data-gr="Τραγανό κοτόπουλο, μοτσαρέλα, bacon, ντομάτα, iceberg slaw, kewpie aioli">Crispy chicken, mozzarella, bacon, tomato, iceberg slaw, kewpie aioli</div>
+        </div>
+      </div>
+      <div class="mnote" data-en="All club sandwiches served with long fries" data-gr="Όλα τα κλαμπ σάντουιτς σερβίρονται με long fries">All club sandwiches served with long fries</div>
+    </div>
+
+    <!-- SIDES -->
+    <div class="mpanel" id="food-sides">
+      <div class="mitems">
+        <div class="mitem">
+          <div class="mitem-name">Fries With Benefits</div>
+          <div class="mitem-desc" data-en="Long fries, seasoning, choice of sauce from the library" data-gr="Long fries από ζύμη πατάτας, αλάτι καρυκευμάτων, επιλογή σάλτσας από τη library">Long fries, seasoning, choice of sauce from the library</div>
+        </div>
+        <div class="mitem">
+          <div class="mitem-name" data-en="Extra Sauce" data-gr="Έξτρα Σάλτσα">Extra Sauce</div>
+          <div class="mitem-desc" data-en="Any sauce from the ZERO library" data-gr="Οποιαδήποτε σάλτσα από τη βιβλιοθήκη ZERO">Any sauce from the ZERO library</div>
+        </div>
+      </div>
+      <div class="sauce-box">
+        <div class="sauce-box-head">
+          <div class="sauce-box-title" data-en="→ Zero Sauce Library ←" data-gr="→ Βιβλιοθήκη Σαλτσών ZERO ←">→ Zero Sauce Library ←</div>
+          <div class="sauce-box-sub" data-en="Choose your sauce. Make it yours." data-gr="Διάλεξε τη σάλτσα σου. Κάν' το δικό σου.">Choose your sauce. Make it yours.</div>
+        </div>
+        <div class="sauce-grid">
+          <div>
+            <div class="sauce-name">ZERO Smash Sauce</div>
+            <div class="sauce-desc" data-en="Mayo, pickle relish, mustard, onion, sumac" data-gr="Μαγιονέζα, pickle relish, μουστάρδα, κρεμμύδι, σουμάκ">Mayo, pickle relish, mustard, onion, sumac</div>
+          </div>
+          <div>
+            <div class="sauce-name">Kewpie Aioli</div>
+            <div class="sauce-desc" data-en="Kewpie-style mayo, rice vinegar" data-gr="Μαγιονέζα τύπου kewpie, rice vinegar">Kewpie-style mayo, rice vinegar</div>
+          </div>
+          <div>
+            <div class="sauce-name">Cheddar Comeback</div>
+            <div class="sauce-desc" data-en="Cheddar sauce spices, emulsified blend" data-gr="Cheddar sauce spices, emulsified blend">Cheddar sauce spices, emulsified blend</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SALADS -->
+    <div class="mpanel" id="food-salads">
+      <div class="mitems">
+        <div class="mitem">
+          <div class="mitem-name">Summer In Greece <span class="mveg">V</span></div>
+          <div class="mitem-desc" data-en="Tomato, cucumber, onion, olives, green pepper, feta, capers, olive oil" data-gr="Ντομάτα, αγγούρι, κρεμμύδι, ελιές, πράσινη πιπεριά, φέτα, κάπαρη, ελαιόλαδο">Tomato, cucumber, onion, olives, green pepper, feta, capers, olive oil</div>
+        </div>
+        <div class="mitem">
+          <div class="mitem-name">Greek Therapy <span class="mveg">V</span></div>
+          <div class="mitem-desc" data-en="Watermelon, feta, iceberg slaw, fresh mint, carob paximadi, olive oil" data-gr="Καρπούζι, φέτα, φρέσκια μέντα, χαρουποπαξιμάδι, ελαιόλαδο">Watermelon, feta, iceberg slaw, fresh mint, carob paximadi, olive oil</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DESSERTS -->
+    <div class="mpanel" id="food-desserts">
+      <div class="mitems">
+        <div class="mitem">
+          <div class="mitem-name">The Dark Kiss</div>
+          <div class="mitem-desc" data-en="Sweet panuozzo dough, Nutella, banana" data-gr="Γλυκιά ζύμη panuozzo, Nutella, μπανάνα">Sweet panuozzo dough, Nutella, banana</div>
+        </div>
+        <div class="mitem">
+          <div class="mitem-name">Greek Bliss <span class="mveg">V</span></div>
+          <div class="mitem-desc" data-en="Yoghurt, honey, granola, fresh fruits" data-gr="Γιαούρτι, μέλι, granola, φρέσκα φρούτα">Yoghurt, honey, granola, fresh fruits</div>
+        </div>
+        <div class="mitem">
+          <div class="mitem-name">Tiramisu</div>
+          <div class="mitem-desc" data-en="Classic Italian, homemade" data-gr="Κλασικό ιταλικό, σπιτικό">Classic Italian, homemade</div>
+        </div>
+        <div class="mitem">
+          <div class="mitem-name" data-en="Ice Cream" data-gr="Παγωτό">Ice Cream</div>
+          <div class="mitem-desc" data-en="Ask the staff for the daily prepped flavours" data-gr="Ρωτήστε το προσωπικό για τις γεύσεις">Ask the staff for the daily prepped flavours</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <section class="drinks" id="drinks">
   <div class="wrap">
-    <div class="label reveal">Drinks</div>
-    <h2 class="title reveal">island frequency.<br><span class="italic">served cold.</span></h2>
-    <p class="lead reveal">From morning freddo to lazy afternoon cocktails, the drink list is built around heat, salt, music and soft summer light.</p>
+    <div class="label reveal" data-en="Drinks" data-gr="Ποτά">Drinks</div>
+    <h2 class="title reveal">
+      <span data-en="island frequency." data-gr="συχνότητα νησιού.">island frequency.</span><br>
+      <span class="italic" data-en="served cold." data-gr="σερβίρεται παγωμένο.">served cold.</span>
+    </h2>
+    <p class="lead reveal" data-en="From morning freddo to lazy afternoon cocktails, the drink list is built around heat, salt, music and soft summer light." data-gr="Από το πρωινό freddo μέχρι τα απογευματινά cocktails, η λίστα ποτών χτίστηκε γύρω από ζέστη, αλάτι, μουσική και απαλό καλοκαιρινό φως.">From morning freddo to lazy afternoon cocktails, the drink list is built around heat, salt, music and soft summer light.</p>
 
-    <div class="drinks-layout reveal">
-      <div class="drinks-photo"><img src="zero_site_assets/signature-cocktails-example.jpg" alt="Signature cocktail examples"></div>
-      <div class="drink-list">
-        <div class="drink">
-          <img src="zero_site_assets/iced-coffee.jpg" alt="Iced coffee">
-          <h3>Coffee</h3>
-          <p>Freddo espresso, cappuccino, frappe, Greek coffee and cold beach essentials.</p>
-        </div>
-        <div class="drink">
-          <img src="zero_site_assets/cocktail-beach.jpg" alt="Cocktail">
-          <h3>Cocktails</h3>
-          <p>Signature transmissions, classics, citrus, passion fruit, coconut, ginger and herbs.</p>
-        </div>
-        <div class="drink">
-          <img src="zero_site_assets/palm-sunset.jpg" alt="Sunset beer mood">
-          <h3>Beers</h3>
-          <p>Greek favorites, island beers, cold bottles and easy beach refreshment.</p>
-        </div>
-        <div class="drink">
-          <img src="zero_site_assets/samos-beach-hero.jpg" alt="Summer beach drinks">
-          <h3>Juices</h3>
-          <p>Fresh orange, lemonade, slushies, soft drinks and simple hydration for the sun.</p>
-        </div>
+    <!-- DRINKS TABS -->
+    <div class="menu-tabs reveal" style="margin-top:48px">
+      <button class="mtab on" onclick="mswitch('drink','coffee',this)" data-en="Coffee" data-gr="Καφές">Coffee</button>
+      <button class="mtab"    onclick="mswitch('drink','cold',this)" data-en="Cold Drinks" data-gr="Κρύα Ροφήματα">Cold Drinks</button>
+      <button class="mtab"    onclick="mswitch('drink','juices',this)" data-en="Juices" data-gr="Χυμοί">Juices</button>
+      <button class="mtab"    onclick="mswitch('drink','beers',this)" data-en="Beers" data-gr="Μπίρες">Beers</button>
+      <button class="mtab"    onclick="mswitch('drink','classics',this)" data-en="Classics" data-gr="Κλασικά">Classics</button>
+      <button class="mtab"    onclick="mswitch('drink','signatures',this)" data-en="Signature Transmissions" data-gr="Signature Μεταδόσεις">Signature Transmissions</button>
+    </div>
+
+    <!-- COFFEE -->
+    <div class="mpanel on" id="drink-coffee">
+      <div class="mitems">
+        <div class="mitem"><div class="mitem-name">Cappuccino</div><div class="mitem-desc" data-en="Single / Double" data-gr="Μονό / Διπλό">Single / Double</div></div>
+        <div class="mitem"><div class="mitem-name">Freddo Espresso</div><div class="mitem-desc" data-en="Iced double espresso, Greek beach classic" data-gr="Παγωμένο διπλό espresso, κλασικό της ελληνικής παραλίας">Iced double espresso, Greek beach classic</div></div>
+        <div class="mitem"><div class="mitem-name">Freddo Cappuccino</div><div class="mitem-desc" data-en="Iced cappuccino with cold foam" data-gr="Παγωμένο cappuccino με κρύο αφρό">Iced cappuccino with cold foam</div></div>
+        <div class="mitem"><div class="mitem-name">Φραπέ</div><div class="mitem-desc" data-en="Greek iced coffee, shaken to perfection" data-gr="Ελληνικός παγωμένος καφές, χτυπητός τέλεια">Greek iced coffee, shaken to perfection</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Chocolate" data-gr="Σοκολάτα">Chocolate</div><div class="mitem-desc" data-en="Hot or cold, rich blend" data-gr="Ζεστή ή κρύα, πλούσιο μείγμα">Hot or cold, rich blend</div></div>
+        <div class="mitem"><div class="mitem-name">Espresso</div><div class="mitem-desc" data-en="Single / Double" data-gr="Μονό / Διπλό">Single / Double</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Greek Coffee" data-gr="Ελληνικός Καφές">Greek Coffee</div><div class="mitem-desc" data-en="Single / Double, traditional preparation" data-gr="Μονός / Διπλός, παραδοσιακή παρασκευή">Single / Double, traditional preparation</div></div>
       </div>
     </div>
+
+    <!-- COLD DRINKS -->
+    <div class="mpanel" id="drink-cold">
+      <div class="mitems">
+        <div class="mitem"><div class="mitem-name" data-en="Milkshake" data-gr="Μιλκσέικ">Milkshake</div><div class="mitem-desc" data-en="Chocolate / Vanilla / Strawberry" data-gr="Σοκολάτα / Βανίλια / Φράουλα">Chocolate / Vanilla / Strawberry</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Soft Drinks" data-gr="Αναψυκτικά">Soft Drinks</div><div class="mitem-desc" data-en="Assorted sodas &amp; classics" data-gr="Διάφορα αναψυκτικά &amp; κλασικά">Assorted sodas &amp; classics</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Lemonade" data-gr="Λεμονάδα">Lemonade</div><div class="mitem-desc" data-en="Gia..giamas — Classic or Peach" data-gr="Gia..giamas — Κλασική ή Ροδάκινο">Gia..giamas — Classic or Peach</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Iced Tea" data-gr="Τσάι">Iced Tea</div><div class="mitem-desc" data-en="Lemon / Peach / Strawberry Hibiscus" data-gr="Λεμόνι / Ροδάκινο / Φράουλα Ιβίσκος">Lemon / Peach / Strawberry Hibiscus</div></div>
+        <div class="mitem"><div class="mitem-name">Red Bull</div><div class="mitem-desc" data-en="Original energy drink" data-gr="Αρχικό ενεργειακό ποτό">Original energy drink</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Water" data-gr="Νερό">Water</div><div class="mitem-desc" data-en="500ml / 1000ml" data-gr="500ml / 1000ml">500ml / 1000ml</div></div>
+      </div>
+    </div>
+
+    <!-- JUICES -->
+    <div class="mpanel" id="drink-juices">
+      <div class="mitems">
+        <div class="mitem"><div class="mitem-name" data-en="Fresh Orange Juice" data-gr="Φυσικός Χυμός Πορτοκάλι">Fresh Orange Juice</div><div class="mitem-desc" data-en="Squeezed to order" data-gr="Στυμμένος στη στιγμή">Squeezed to order</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Juice" data-gr="Χυμός">Juice</div><div class="mitem-desc" data-en="Assorted bottled juices" data-gr="Διάφοροι χυμοί σε μπουκάλι">Assorted bottled juices</div></div>
+        <div class="mitem"><div class="mitem-name" data-en="Slushy" data-gr="Γρανίτα">Slushy</div><div class="mitem-desc" data-en="Frozen fruit slush — ask for today's flavour" data-gr="Παγωμένη γρανίτα φρούτων — ρωτήστε για τη γεύση της ημέρας">Frozen fruit slush — ask for today's flavour</div></div>
+      </div>
+    </div>
+
+    <!-- BEERS -->
+    <div class="mpanel" id="drink-beers">
+      <div class="mitems">
+        <div class="mitem"><div class="mitem-name">Alfa</div><div class="mitem-desc" data-en="Greek lager, cold bottle" data-gr="Ελληνική lager, παγωμένο μπουκάλι">Greek lager, cold bottle</div></div>
+        <div class="mitem"><div class="mitem-name">Corona</div><div class="mitem-desc" data-en="Mexican lager, served with lime" data-gr="Μεξικάνικη lager, με λάιμ">Mexican lager, served with lime</div></div>
+        <div class="mitem"><div class="mitem-name">Mamos</div><div class="mitem-desc" data-en="Craft Greek, island favourite" data-gr="Craft ελληνική, αγαπημένη του νησιού">Craft Greek, island favourite</div></div>
+        <div class="mitem"><div class="mitem-name">Ikariotisa</div><div class="mitem-desc" data-en="Aegean craft beer, local character" data-gr="Craft μπίρα Αιγαίου, τοπικός χαρακτήρας">Aegean craft beer, local character</div></div>
+        <div class="mitem"><div class="mitem-name">Heineken 0%</div><div class="mitem-desc" data-en="Non-alcoholic, cold &amp; crisp" data-gr="Μη αλκοολούχα, παγωμένη &amp; δροσερή">Non-alcoholic, cold &amp; crisp</div></div>
+        <div class="mitem"><div class="mitem-name">Radler</div><div class="mitem-desc" data-en="Beer &amp; citrus blend" data-gr="Μπίρα &amp; εσπεριδοειδή">Beer &amp; citrus blend</div></div>
+        <div class="mitem"><div class="mitem-name">Milokleftis</div><div class="mitem-desc" data-en="Greek craft, character bottle" data-gr="Ελληνική craft, μπουκάλι με χαρακτήρα">Greek craft, character bottle</div></div>
+      </div>
+    </div>
+
+    <!-- CLASSICS -->
+    <div class="mpanel" id="drink-classics">
+      <div class="mitems">
+        <div class="mitem"><div class="mitem-name">Margarita</div><div class="mitem-desc" data-en="Tequila, triple sec, fresh lime, salt rim" data-gr="Tequila, triple sec, φρέσκο λάιμ, αλάτι στο χείλος">Tequila, triple sec, fresh lime, salt rim</div></div>
+        <div class="mitem"><div class="mitem-name">Paloma</div><div class="mitem-desc" data-en="Tequila, grapefruit soda, lime, salt" data-gr="Tequila, σόδα γκρέιπφρουτ, λάιμ, αλάτι">Tequila, grapefruit soda, lime, salt</div></div>
+        <div class="mitem"><div class="mitem-name">Mojito</div><div class="mitem-desc" data-en="White rum, mint, lime, sugar, soda" data-gr="Λευκό ρούμι, μέντα, λάιμ, ζάχαρη, σόδα">White rum, mint, lime, sugar, soda</div></div>
+        <div class="mitem"><div class="mitem-name">Pina Colada</div><div class="mitem-desc" data-en="Rum, coconut cream, pineapple" data-gr="Ρούμι, κρέμα καρύδας, ανανάς">Rum, coconut cream, pineapple</div></div>
+        <div class="mitem"><div class="mitem-name">Mai Tai</div><div class="mitem-desc" data-en="Rum, orange curaçao, lime, orgeat" data-gr="Ρούμι, orange curaçao, λάιμ, orgeat">Rum, orange curaçao, lime, orgeat</div></div>
+        <div class="mitem"><div class="mitem-name">Daiquiri</div><div class="mitem-desc" data-en="White rum, fresh lime, sugar" data-gr="Λευκό ρούμι, φρέσκο λάιμ, ζάχαρη">White rum, fresh lime, sugar</div></div>
+        <div class="mitem"><div class="mitem-name">Negroni / Americano</div><div class="mitem-desc" data-en="Gin, Campari, sweet vermouth / or soda" data-gr="Gin, Campari, γλυκό vermouth / ή σόδα">Gin, Campari, sweet vermouth / or soda</div></div>
+        <div class="mitem"><div class="mitem-name">Aperol Spritz</div><div class="mitem-desc" data-en="Aperol, prosecco, soda, orange slice" data-gr="Aperol, prosecco, σόδα, φέτα πορτοκάλι">Aperol, prosecco, soda, orange slice</div></div>
+        <div class="mitem"><div class="mitem-name">Cosmopolitan</div><div class="mitem-desc" data-en="Vodka, triple sec, cranberry, lime" data-gr="Βότκα, triple sec, cranberry, λάιμ">Vodka, triple sec, cranberry, lime</div></div>
+        <div class="mitem"><div class="mitem-name">Pornstar</div><div class="mitem-desc" data-en="Vanilla vodka, passion fruit, prosecco shot" data-gr="Βανίλια βότκα, passion fruit, σφηνάκι prosecco">Vanilla vodka, passion fruit, prosecco shot</div></div>
+      </div>
+    </div>
+
+    <!-- SIGNATURE TRANSMISSIONS -->
+    <div class="mpanel" id="drink-signatures">
+      <div class="mitems">
+        <div class="mitem"><div class="mitem-name">Delulu Wave <span class="mbadge">Original</span></div><div class="mitem-desc" data-en="Gin, fresh lime juice, passion fruit, orgeat, Falernum" data-gr="Τζιν, φρέσκος χυμός λάιμ, passion fruit, orgeat, Falernum">Gin, fresh lime juice, passion fruit, orgeat, Falernum</div></div>
+        <div class="mitem"><div class="mitem-name">The Revelation</div><div class="mitem-desc" data-en="Vin Doux, fresh lime juice, vanilla, mandarine" data-gr="Vin Doux, φρέσκος χυμός λάιμ, βανίλια, μανταρίνι">Vin Doux, fresh lime juice, vanilla, mandarine</div></div>
+        <div class="mitem"><div class="mitem-name">Zing Protocol ⚡</div><div class="mitem-desc" data-en="Gin, fresh lime juice, ginger, green apple, Sprite" data-gr="Τζιν, φρέσκος χυμός λάιμ, τζίντζερ, πράσινο μήλο, Sprite">Gin, fresh lime juice, ginger, green apple, Sprite</div></div>
+        <div class="mitem"><div class="mitem-name">Noon Blush</div><div class="mitem-desc" data-en="Vodka, fresh lime juice, peach, plum" data-gr="Βότκα, φρέσκος χυμός λάιμ, ροδάκινο, δαμάσκηνο">Vodka, fresh lime juice, peach, plum</div></div>
+        <div class="mitem"><div class="mitem-name">Coco Loco</div><div class="mitem-desc" data-en="Rum, fresh lemon juice, banana, coconut, spices" data-gr="Ρούμι, φρέσκος χυμός λεμονιού, μπανάνα, καρύδα, μπαχαρικά">Rum, fresh lemon juice, banana, coconut, spices</div></div>
+        <div class="mitem"><div class="mitem-name">Red Flag 🚩</div><div class="mitem-desc" data-en="Berry infused vodka, fresh lime juice, passion fruit, cinnamon, cardamom" data-gr="Βότκα με έγχυση berries, φρέσκος χυμός λάιμ, passion fruit, κανέλα, κάρδαμο">Berry infused vodka, fresh lime juice, passion fruit, cinnamon, cardamom</div></div>
+      </div>
+      <div class="sig-note">
+        <div class="sig-note-eye" data-en="Made for" data-gr="Φτιαγμένο για">Made for</div>
+        <div class="sig-note-main" data-en="slow summer afternoons" data-gr="αργά καλοκαιρινά απογεύματα">slow summer afternoons</div>
+        <div class="sig-note-sub" data-en="Sunset Fuel · Island Frequency · Cold Drinks" data-gr="Καύσιμο Ηλιοβασιλέματος · Συχνότητα Νησιού · Κρύα Ποτά">Sunset Fuel · Island Frequency · Cold Drinks</div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -585,12 +898,37 @@ section{position:relative}
 </footer>
 
 <script>
+/* ── scroll reveal ── */
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) e.target.classList.add('visible');
   });
 }, { threshold: .12 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ── tab switcher ── */
+function mswitch(group, id, btn) {
+  const section = document.getElementById(group === 'food' ? 'menu' : 'drinks');
+  section.querySelectorAll('.mpanel').forEach(p => p.classList.remove('on'));
+  section.querySelectorAll('.mtab').forEach(b => b.classList.remove('on'));
+  document.getElementById(group + '-' + id).classList.add('on');
+  btn.classList.add('on');
+}
+
+/* ── language switcher ── */
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  /* toggle button states */
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-gr').classList.toggle('active', lang === 'gr');
+
+  /* swap all elements that have data-en / data-gr attributes */
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.innerHTML = el.getAttribute('data-' + lang);
+  });
+}
 </script>
 </body>
 </html>
