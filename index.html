@@ -48,8 +48,17 @@ img{max-width:100%;display:block}
 a{text-decoration:none;color:inherit}
 .serif{font-family:'Cormorant Garamond',serif}
 .italic{font-style:italic}
+.announce{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  background:var(--terracotta);
+  color:var(--ivory);
+  font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+  text-align:center;padding:9px 44px;
+  display:flex;align-items:center;justify-content:center;gap:18px;
+}
+.announce-dot{width:5px;height:5px;background:rgba(255,250,241,.5);border-radius:50%;flex-shrink:0}
 .nav{
-  position:fixed;top:0;left:0;right:0;z-index:50;height:78px;
+  position:fixed;top:34px;left:0;right:0;z-index:50;height:78px;
   display:flex;align-items:center;justify-content:space-between;
   padding:0 46px;
   background:linear-gradient(180deg,rgba(255,244,228,.88),rgba(255,244,228,.38));
@@ -83,7 +92,7 @@ a{text-decoration:none;color:inherit}
   display:grid;
   place-items:center;
   text-align:center;
-  padding:118px 22px 72px;
+  padding:152px 22px 72px;
   overflow:hidden;
   background:var(--linen);
 }
@@ -113,19 +122,34 @@ a{text-decoration:none;color:inherit}
 h1{
   font-family:'Cormorant Garamond',serif;
   font-weight:400;
-  font-size:clamp(64px,10.5vw,150px);
-  letter-spacing:.02em;
-  line-height:.82;
+  font-size:clamp(38px,6.2vw,96px);
+  letter-spacing:.04em;
+  line-height:1.08;
   color:var(--wood);
   text-shadow:0 16px 50px rgba(255,244,228,.45);
+  text-transform:uppercase;
 }
-h1 em{color:var(--terracotta)}
+h1 em{color:var(--terracotta);font-style:normal}
+h1 .borderline{
+  display:block;
+  font-size:clamp(11px,1.4vw,18px);
+  letter-spacing:.38em;
+  font-family:Manrope,system-ui,sans-serif;
+  font-weight:700;
+  color:var(--terracotta);
+  text-transform:uppercase;
+  margin-top:18px;
+  opacity:.9;
+}
 .hero-copy{
-  max-width:650px;
+  max-width:680px;
   margin:28px auto 34px;
   font-size:15px;
-  line-height:1.95;
+  line-height:2;
   color:#574437;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(16px,1.6vw,20px);
+  font-style:italic;
 }
 .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 .btn{
@@ -417,27 +441,78 @@ section{position:relative}
 }
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease}
 .reveal.visible{opacity:1;transform:none}
+/* WHY ZERO */
+.why{background:var(--ink)}
+.why .wrap{padding-top:90px;padding-bottom:90px}
+.why .label{color:var(--sand)}
+.why .title{color:var(--ivory)}
+.why-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:rgba(255,250,241,.08);
+  border:1px solid rgba(255,250,241,.08);
+  margin-top:52px;
+}
+.why-card{
+  padding:42px 34px;
+  background:rgba(43,35,29,.92);
+  transition:.3s ease;
+}
+.why-card:hover{background:rgba(79,52,35,.6)}
+.why-card-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:52px;color:rgba(175,104,73,.35);margin-bottom:16px;
+}
+.why-card h3{
+  font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--sand);margin-bottom:14px;
+}
+.why-card p{font-size:14px;line-height:1.85;color:rgba(255,250,241,.58)}
+
+/* HOW IT WORKS */
+.how{background:linear-gradient(180deg,var(--linen),#fff9ee)}
+.how-steps{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:rgba(79,52,35,.12);
+  border:1px solid rgba(79,52,35,.12);
+  margin-top:52px;
+}
+.how-step{
+  background:rgba(255,250,241,.9);
+  padding:36px 30px;
+  position:relative;
+}
+.how-step-n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:72px;line-height:1;
+  color:rgba(175,104,73,.12);
+  position:absolute;top:20px;right:24px;
+}
+.how-step h3{
+  font-size:12px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--wood);margin-bottom:12px;
+}
+.how-step p{font-size:14px;line-height:1.85;color:var(--muted)}
+.how-note{
+  margin-top:28px;
+  padding:22px 28px;
+  background:rgba(175,104,73,.08);
+  border-left:3px solid var(--terracotta);
+  font-size:14px;line-height:1.8;color:var(--muted);
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+}
 @media(max-width:900px){
-  .nav{height:68px;padding:0 20px}
-  .brand{font-size:13px}
-  .nav ul{display:none}
-  .coords,.scroll{display:none}
-  .hero{padding-top:96px}
-  .logo{width:220px}
-  h1{font-size:clamp(58px,17vw,100px)}
-  .hero-copy{font-size:14px}
-  .wrap{padding:78px 22px}
-  .two,.feature-grid,.story-grid,.drinks-layout,.drink-list{grid-template-columns:1fr;gap:22px}
-  .menu-head{display:block}
-  .gallery{grid-template-columns:1fr;grid-template-rows:repeat(4,270px)}
-  .tile:nth-child(1),.tile:nth-child(3){grid-row:auto}
-  .photo-card,.photo-card img,.drinks-photo,.drinks-photo img{min-height:430px}
-  .title{font-size:48px}
-  .btn{width:100%;max-width:300px}
+  .why-grid,.how-steps{grid-template-columns:1fr}
+  .announce{font-size:9px;padding:8px 16px;letter-spacing:.16em}
+  .nav{top:30px}
 }
 </style>
 </head>
 <body>
+<div class="announce">
+  <div class="announce-dot"></div>
+  Now open · Summer 2026 · Mykali Beach · Daily from 10:00
+  <div class="announce-dot"></div>
+</div>
 <nav class="nav">
   <a class="brand" href="#top">ZERO</a>
   <ul>
@@ -446,7 +521,7 @@ section{position:relative}
     <li><a href="#menu">Food</a></li>
     <li><a href="#drinks">Drinks</a></li>
     <li><a href="#visit">Find Us</a></li>
-    <li><a class="nav-cta" href="#menu">View Menu</a></li>
+    <li><a class="nav-cta" href="#menu">See Menu</a></li>
   </ul>
   <div class="lang-toggle">
     <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
@@ -460,11 +535,16 @@ section{position:relative}
   <div class="hero-inner">
     <div class="eyebrow reveal">Beach Canteen · Mykalis 0 · Samos</div>
     <img src="zero_site_assets/zero-logo-transparent.png" class="logo reveal" alt="ZERO Beach Canteen logo">
-    <h1 class="reveal">Greece on your plate.<br><em>Turkey on the horizon.</em></h1>
-    <p class="hero-copy reveal">Two countries. One stretch of sea. Zero rules. A beach canteen sitting at the exact edge where Europe ends and the East begins — fire bread, cold drinks, and the kind of afternoon the rest of the world is still looking for.</p>
+    <h1 class="reveal">
+      Greece under your feet.<br>
+      <em>Turkey in your eyes.</em><br>
+      ZERO in between.<br>
+      <span class="borderline">Welcome to the borderline of summer.</span>
+    </h1>
+    <p class="hero-copy reveal">A beach canteen on the edge of Samos — fire bread, cold drinks, sea wind, loud sun, and the strange feeling that you found the place where the map starts to blur.</p>
     <div class="actions reveal">
-      <a class="btn primary" href="#menu">Explore Menu</a>
-      <a class="btn" href="#visit">Find Mykalis 0</a>
+      <a class="btn primary" href="#menu">See The Menu</a>
+      <a class="btn" href="#visit">Find The Secret Spot</a>
     </div>
   </div>
   <div class="coords">37°41'N · 26°46'E<br>Mykali Beach, Samos</div>
@@ -486,9 +566,9 @@ section{position:relative}
     </div>
 
     <div class="story-grid reveal">
-      <div class="story-item"><div class="num">01</div><h3>Fire Food</h3><p>House dough, panuozzo, smash burgers, long fries and beach food made for eating with your hands.</p></div>
-      <div class="story-item"><div class="num">02</div><h3>Cold Rituals</h3><p>Freddo, cocktails, beers, fresh juices and slow summer drinks for the hours between swim and sleep.</p></div>
-      <div class="story-item"><div class="num">03</div><h3>Barefoot Luxury</h3><p>Pastel colors, jute rope, dried palms, salt air and the comfort of a place that feels found, not forced.</p></div>
+      <div class="story-item"><div class="num">01</div><h3>Fire Food</h3><p>House dough fired daily in a Gozney Arc XL. Panuozzo, smash burgers, long fries — beach food built for eating with your hands. No cutlery required.</p></div>
+      <div class="story-item"><div class="num">02</div><h3>Cold Rituals</h3><p>Freddo at 10. Signature cocktail by 2. Whatever you need by sunset. The drink list runs as long as the afternoon does.</p></div>
+      <div class="story-item"><div class="num">03</div><h3>Found, Not Forced</h3><p>Self-service. No reservations. No dress code. You order, you find your spot, you stay as long as the sun lets you. This is how it works here — and it works.</p></div>
     </div>
   </div>
 </section>
@@ -503,6 +583,59 @@ section{position:relative}
       <div class="tile"><img src="zero_site_assets/iced-coffee.jpg" alt="Iced coffee"><span>freddo hour</span></div>
       <div class="tile"><img src="zero_site_assets/palm-sunset.jpg" alt="Palm sunset"><span>linen light</span></div>
       <div class="tile"><img src="zero_site_assets/cocktail-beach.jpg" alt="Cocktail beach"><span>cold drinks</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY ZERO -->
+<section class="why">
+  <div class="wrap">
+    <div class="label reveal">Why Zero</div>
+    <h2 class="title reveal">Three reasons.<br><span class="italic">One place.</span></h2>
+    <div class="why-grid reveal">
+      <div class="why-card">
+        <div class="why-card-num">01</div>
+        <h3>Edge of Samos</h3>
+        <p>Sit on the Greek side and look straight across to Turkey. No other beach bar in the Aegean gives you that view with a cold drink in hand. This is the actual edge of Europe.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-card-num">02</div>
+        <h3>Fire Bread</h3>
+        <p>Our dough is made here and fired daily in a Gozney Arc XL. Panuozzo, burgers, club sandwiches — everything starts from scratch. Most beach bars don't bother. We can't not bother.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-card-num">03</div>
+        <h3>Secret Beach Energy</h3>
+        <p>Sunbeds, cold drinks, salt air, music running low. The kind of place people find by accident and come back for on purpose. No signs. No algorithm. Just word of mouth and a pin on a map.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="wrap">
+    <div class="label reveal">How It Works</div>
+    <h2 class="title reveal">No waiters.<br><span class="italic">No waiting.</span></h2>
+    <div class="how-steps reveal">
+      <div class="how-step">
+        <div class="how-step-n">1</div>
+        <h3>Order at the counter</h3>
+        <p>Walk up, choose what you want, pay. We'll give you a number. The menu is on your phone — scan the QR at the entrance or find it at zero-canteen.vercel.app</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-n">2</div>
+        <h3>Find your spot</h3>
+        <p>Sunbeds, sand, or shade — take what's free. There's no reservation system and no table service. The whole beach is yours.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-n">3</div>
+        <h3>We bring it to you</h3>
+        <p>When your food is ready we'll find you by number. Drinks you collect at the counter. Keep your afternoon exactly as slow as you planned it.</p>
+      </div>
+    </div>
+    <div class="how-note reveal">
+      ZERO is a self-service canteen. We designed it that way on purpose — so the service never interrupts the afternoon, and the afternoon never has to end on someone else's schedule.
     </div>
   </div>
 </section>
@@ -628,7 +761,7 @@ section{position:relative}
           <span class="italic" data-en="fired here." data-gr="ψήνεται εδώ." data-tr="fired here." data-tr="burada pişirilir.">fired here.</span>
         </h2>
       </div>
-      <p class="lead reveal" data-en="A small menu with beach-bar speed and chef-level thinking. Comfort food, but with identity. Everything made in-house, fired to order." data-gr="Ένα μικρό μενού με ταχύτητα beach bar και σκέψη σεφ. Φαγητό για άνεση, αλλά με ταυτότητα. Όλα φτιαγμένα στη στιγμή, ψημένα κατά παραγγελία." data-tr="A small menu with beach-bar speed and chef-level thinking. Comfort food, but with identity. Everything made in-house, fired to order." data-tr="Plaj bar hızında, şef kalitesinde düşünülmüş küçük bir menü. Kimliği olan ev yemeği. Her şey sipariş üzerine, yerinde hazırlanır.">A small menu with beach-bar speed and chef-level thinking. Comfort food, but with identity. Everything made in-house, fired to order.</p>
+      <p class="lead reveal" data-en="Not restaurant food. Not fast food. Fire food. Everything made in-house, fired to order in a Gozney Arc XL." data-gr="Όχι εστιατόριο. Όχι fast food. Φαγητό από φωτιά. Όλα φτιαγμένα εδώ, ψημένα κατά παραγγελία." data-tr="Restoran yemeği değil. Fast food değil. Ateş yemeği. Her şey sipariş üzerine, yerinde yapılır.">Not restaurant food. Not fast food. Fire food. Everything made in-house, fired to order in a Gozney Arc XL.</p>
     </div>
 
     <!-- FOOD TABS -->
@@ -774,8 +907,8 @@ section{position:relative}
   <div class="wrap">
     <div class="label reveal" data-en="Drinks" data-gr="Ποτά" data-tr="İçecekler">Drinks</div>
     <h2 class="title reveal">
-      <span data-en="island frequency." data-gr="συχνότητα νησιού." data-tr="ada frekansı.">island frequency.</span><br>
-      <span class="italic" data-en="served cold." data-gr="σερβίρεται παγωμένο." data-tr="soğuk servis edilir.">served cold.</span>
+      <span data-en="Coffee first." data-gr="Πρώτα καφές." data-tr="Önce kahve.">Coffee first.</span><br>
+      <span class="italic" data-en="Cocktails later. Time optional." data-gr="Cocktails μετά. Χρόνος προαιρετικός." data-tr="Sonra kokteyl. Zaman isteğe bağlı.">Cocktails later. Time optional.</span>
     </h2>
     <p class="lead reveal" data-en="From morning freddo to lazy afternoon cocktails, the drink list is built around heat, salt, music and soft summer light." data-gr="Από το πρωινό freddo μέχρι τα απογευματινά cocktails, η λίστα ποτών χτίστηκε γύρω από ζέστη, αλάτι, μουσική και απαλό καλοκαιρινό φως." data-tr="Sabah freddo'sundan öğleden sonra kokteyllerine kadar, içecek listesi sıcaklık, tuz, müzik ve yumuşak yaz ışığı üzerine kurulmuştur.">From morning freddo to lazy afternoon cocktails, the drink list is built around heat, salt, music and soft summer light.</p>
 
@@ -879,8 +1012,8 @@ section{position:relative}
       <h2 class="title">see you<br><span class="italic">@ Mykalis 0</span></h2>
       <div class="visit-list">
         <div class="visit-block"><small>Address</small><p>Mykali Beach, Samos Island</p><span>At the end of the road. Literally.</span></div>
-        <div class="visit-block"><small>Hours</small><p>10:00 — Sunset</p><span>Open daily · Summer season</span></div>
-        <div class="visit-block"><small>Instagram</small><p>@zero.mykali</p><span>Daily specials, beach updates, good people.</span></div>
+        <div class="visit-block"><small>Hours</small><p>10:00 — late afternoon</p><span>Open daily · Summer season</span></div>
+        <div class="visit-block"><small>Instagram</small><p>@zero.beach.canteen</p><span>Tag your escape. We post what's left on the grill, what's in the glass, and when the sunset is worth staying for.</span></div>
       </div>
 
       <!-- QR CODE -->
@@ -911,7 +1044,9 @@ section{position:relative}
 <footer class="footer">
   <img src="zero_site_assets/zero-logo-transparent.png" alt="ZERO logo">
   <h2>ZERO</h2>
-  <p>Beach Canteen · Off The Map · Samos</p>
+  <p>Beach Canteen · Mykali Beach · Samos · Off The Map</p>
+  <p style="margin-top:18px;font-size:13px;font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:.06em;color:rgba(255,250,241,.45);">Come for the food. Stay because your story looks better here.</p>
+  <p style="margin-top:12px;"><a href="https://instagram.com/zero.beach.canteen" target="_blank" style="color:var(--peach);letter-spacing:.2em;">@zero.beach.canteen</a></p>
 </footer>
 
 <script>
